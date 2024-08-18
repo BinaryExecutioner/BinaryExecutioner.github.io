@@ -17,11 +17,12 @@ social:
   name: Sidhartha Sunkara
   email: binary_noob@outlook.com
   links:
-    
-    - https//twitter.com/username # change to your twitter homepage
-    - https://github.com/BinaryExecutioner # change to your github homepage
-    - https://www.linkedin.com/in/sidhartha-sunkara
-
+    # The first element serves as the copyright owner's link
+    - https://twitter.com/username # change to your twitter homepage
+    - https://github.com/username # change to your github homepage
+    # Uncomment below to add more social links
+    # - https://www.facebook.com/username
+    # - https://www.linkedin.com/in/username
 webmaster_verifications:
   google: # fill in your Google verification code
   bing: # fill in your Bing verification code
