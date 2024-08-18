@@ -18,11 +18,11 @@ social:
   email: binary_noob@outlook.com
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/username # change to your twitter homepage
-    - https://github.com/username # change to your github homepage
+    - https://twitter.com/N00bMaster2 # change to your twitter homepage
+    - https://github.com/BinaryExecutioner # change to your github homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
-    # - https://www.linkedin.com/in/username
+    - https://www.linkedin.com/in/sidhartha-sunkara
 webmaster_verifications:
   google: # fill in your Google verification code
   bing: # fill in your Bing verification code
