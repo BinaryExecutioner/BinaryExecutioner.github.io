@@ -3,7 +3,7 @@ title: "Baby Walkthrough"
 date: 2024-10-02 14:06:00 +0530
 categories: [Capture the Flags, Windows]
 tags: [vulnlab]     # TAG names should always be lowercase
-description: "Testing"
+description: "Walkthrough of Vulab's Machine Baby"
 ---
 
 
