@@ -10,7 +10,7 @@ description: "Walkthrough of Vulab's Machine Baby"
 ## Introduction
 This walkthrough demonstrates how to compromise a lab machine named "Baby" from Vulnlab by enumerating services like SMB and LDAP on a Windows Server 2022 Domain Controller (DC). The goal is to perform network scanning, domain enumeration, password cracking, and ultimately gain unauthorized access.
 
-## Network Scanning with 
+## Network Scanning with NMAP
 I started with a standard Nmap scan to discover open ports:
 ```
 sudo nmap 10.10.75.4 -sS -n --disable-arp-ping --top-ports=1000 
