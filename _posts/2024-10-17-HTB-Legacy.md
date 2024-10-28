@@ -2,7 +2,7 @@
 title: "Legacy Walkthrough: Exploiting vulnerable Server Service"
 date: 2024-10-18 12:00:00 +0530
 categories: [Capture the Flags, Windows]
-tags: [HTB]   
+tags: [HTB,smb]   
 description: "Walkthrough of HTB's Legacy machine"
 ---
 
@@ -116,6 +116,7 @@ Host script results:
 |_      https://technet.microsoft.com/en-us/library/security/ms17-010.aspx
 
 ```
+
 It looks like the SMB is vulnerable to EternalBlue and NETAPI exploit.
 
 ---
