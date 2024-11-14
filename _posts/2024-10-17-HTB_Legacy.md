@@ -2,7 +2,7 @@
 title: "Legacy Walkthrough: Exploiting vulnerable Server Service"
 date: 2024-10-18 12:00:00 +0530
 categories: [Capture the Flags, Windows]
-tags: [HTB,smb]   
+tags: [HTB,smb,standalone]   
 description: "Walkthrough of HTB's Legacy machine"
 ---
 

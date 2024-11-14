@@ -2,7 +2,7 @@
 title: "Forest Walkthrough: Exploiting AS-REP Roasting and Misconfigured AD Permissions to Compromise the Domain Controller."
 date: 2024-11-10 15:00:00 +0530
 categories: [Capture the Flags, Windows]
-tags: [HTB,ldap,on-prem,privesc]   
+tags: [HTB,ldap,on-prem,privesc,asrep]   
 description: "Walkthrough of HTB's Forest machine"
 ---
 
