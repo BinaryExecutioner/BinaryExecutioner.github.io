@@ -64,13 +64,13 @@ No interesting information found in the UDP Scan results
 ### HTTP Recon
 
 Accessing port 80 displays a web page labeled 'HTB Printer Admin Panel.
-![image.png](assets/img/Forest/image%201.png)
+![image.png](assets/img/Return/image%201.png)
 
 Most available sections, such as 'Fax' and 'Troubleshooting,' are static, but the 'Settings' page includes an intriguing form with fields for the server address, port, username, and password, as shown below.
-![image.png](assets/img/Forest/image%202.png)
+![image.png](assets/img/Return/image%202.png)
 
 When I submitted the form, I observed that only the IP address field was forwarded to the server. Modifying the username and password fields did not result in any changes to the request.
-![image.png](assets/img/Forest/image%203.png)
+![image.png](assets/img/Return/image%203.png)
 
 Further research revealed interesting information
 Printers can use LDAP (Lightweight Directory Access Protocol) to query the Active Directory for user details, such as email addresses, usernames, and group memberships. This allows features like:
@@ -81,7 +81,7 @@ Printers can use LDAP (Lightweight Directory Access Protocol) to query the Activ
 For this to work, the printer needs LDAP credentials (often a service account like svc-printer) to bind to AD and perform queries.
 
 I modified the IP address to point to my machine and set up a Netcat listener to intercept the data submitted by the form possibly revealing the password.
-![image.png](assets/img/Forest/image%204.png)
+![image.png](assets/img/Return/image%204.png)
 
 The incoming request revealed interesting information, which indeed appears to be a password.
 
@@ -97,15 +97,15 @@ connect to [10.10.16.30] from (UNKNOWN) [10.10.11.108] 63453
 ### SMB Recon
 
 To validate the enumerated credentials, I used  netexec to enumerate SMB shares. The results confirmed that the credentials are valid, with the user having interesting 'READ' and 'WRITE' privileges on certain shares.
-![image.png](assets/img/Forest/image.png)
+![image.png](assets/img/Return/image.png)
 
 ## Remote Access Using Compromised Credentials
 
 I attempted to log in to the machine using the compromised credentials, as shown below:
-![image.png](assets/img/Forest/image%206.png)
+![image.png](assets/img/Return/image%206.png)
 
 Navigating to the Users directory reveals two users: svc-printer and Administrator
-![image.png](assets/img/Forest/image%205.png)
+![image.png](assets/img/Return/image%205.png)
 
 Accessing "user.txt" on the svc-printer's desktop reveals fiest flag.
 
@@ -114,13 +114,13 @@ Accessing "user.txt" on the svc-printer's desktop reveals fiest flag.
 ### Method - 1
 
 Enumerating privileges of "svc-printer" using *whoami* command
-![image.png](assets/img/Forest/image%207.png)
+![image.png](assets/img/Return/image%207.png)
 
 Since the user has the Backup privilege enabled. Uploading the necessary module to leverage this privilege for replication.
-![image.png](assets/img/Forest/image%208.png)
+![image.png](assets/img/Return/image%208.png)
 
 Using robocopy to copy the Administrator’s desktop files to a temporary folder.
-![image.png](assets/img/Forest/image%209.png)
+![image.png](assets/img/Return/image%209.png)
 
 Followed by accessing root.txt
 
@@ -173,15 +173,15 @@ LPORT => 8888
 
 The same issue was observed when using the Metasploit Framework; the reverse shell terminated after a few seconds.
 
-![image.png](assets/img/Forest/image%2010.png)
+![image.png](assets/img/Return/image%2010.png)
 
 To stabilize the session, I migrated the process to a more suitable one using the migrate <pid> command.
 
-![image.png](assets/img/Forest/image%2011.png)
+![image.png](assets/img/Return/image%2011.png)
 
 Spawning the shell
 
-![image.png](assets/img/Forest/image%2012.png)
+![image.png](assets/img/Return/image%2012.png)
 
 ## Disclaimer
 
