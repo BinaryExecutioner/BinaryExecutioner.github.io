@@ -1,9 +1,5 @@
-# frozen_string_literal: true
-
 source "https://rubygems.org"
 
-gem "jekyll-theme-chirpy", "~> 7.0", ">= 7.0.1"
-
-group :test do
-  gem "html-proofer", "~> 5.0"
-end
+# Pin to the GitHub Pages bundle (includes Jekyll + common plugins like jekyll-feed)
+gem "github-pages", group: :jekyll_plugins
+gem "webrick", "~> 1.8"  # needed for `jekyll serve` on Ruby 3+

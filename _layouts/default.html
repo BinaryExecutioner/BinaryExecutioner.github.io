@@ -1,72 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title | default: site.name }}</title>
-  <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | strip_newlines | truncate: 160 }}" />
-  <link rel="stylesheet" href="{{ "/assets/css/hacker.css" | relative_url }}" />
-</head>
 <body class="minimal">
+  <!-- keep the matrix canvas -->
   <canvas id="matrixCanvas"></canvas>
 
   <div class="toolbar wrapper">
-    <div class="brand">$ ./{{ site.title | default: 'blog' | downcase | replace: ' ', '_' }} <span class="cursor">█</span></div>
-    <button class="btn" data-mode="minimal" aria-pressed="true">Minimal</button>
-    <button class="btn" data-mode="sidebar">Sidebar</button>
-    <button class="btn" data-mode="matrix">Matrix</button>
-    <button class="btn" data-mode="sidebarMatrix">Sidebar + Matrix</button>
-    <span class="badge">Green-on-Black · Courier New</span>
+    <!-- brand goes Home -->
+    <a class="brand" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+
+    <!-- category nav (replaces Minimal/Sidebar/Matrix buttons & badge) -->
+    <nav class="catbar">
+      <a href="{{ '/red-teaming/' | relative_url }}">Red Teaming</a>
+      <a href="{{ '/blue-teaming/' | relative_url }}">Blue Teaming</a>
+      <a href="{{ '/threat-hunting/' | relative_url }}">Threat Hunting</a>
+      <a href="{{ '/malware-research/' | relative_url }}">Malware Development</a>
+    </nav>
   </div>
 
   <div class="wrapper layout">
-    <aside class="sidebar" aria-label="Section navigation">
-      <p class="nav-title">/sections</p>
-      <a class="nav-link" href="{{ "/" | relative_url }}">Home</a>
-      <a class="nav-link" href="{{ "/categories/" | relative_url }}">Categories</a>
-      <a class="nav-link" href="{{ "/tags/" | relative_url }}">Tags</a>
-      <a class="nav-link" href="{{ "/archives/" | relative_url }}">Archives</a>
-      <hr />
-      <p class="nav-title">/about</p>
-      <a class="nav-link" href="{{ "/about/" | relative_url }}">About</a>
-      <a class="nav-link" href="{{ site.github.repository_url }}">GitHub</a>
-      {% if site.twitter.username %}
-      <a class="nav-link" href="https://twitter.com/{{ site.twitter.username }}">Twitter</a>
-      {% endif %}
-    </aside>
-
     <main class="content" id="content">
       <header>
         <h1>{{ page.title | default: site.title }}</h1>
         {% if page.subtitle %}<p class="subtitle">{{ page.subtitle }}</p>{% endif %}
-        {% if page.layout == 'home' and site.description %}
-          <p>{{ site.description }}</p>
-        {% endif %}
+        {% if page.layout == 'home' and site.description %}<p>{{ site.description }}</p>{% endif %}
       </header>
 
       {{ content }}
 
       <footer class="site-footer">
-        <small>© {{ site.time | date: "%Y" }} {{ site.author.name | default: site.author | default: site.title }}. Built with ❤ in Courier New.</small>
+        <small>© {{ site.time | date: "%Y" }} {{ site.author.name | default: site.author | default: site.title }}</small>
       </footer>
     </main>
   </div>
 
-  <script src="{{ "/assets/js/matrix.js" | relative_url }}" defer></script>
-  <script>
-    // Mode toggling
-    const buttonsInit = () => {
-      const buttons = document.querySelectorAll('.btn[data-mode]');
-      const setMode = (mode) => {
-        document.body.className = mode;
-        buttons.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === mode)));
-        try { localStorage.setItem('hacker_mode', mode); } catch(_){}
-      };
-      const saved = (localStorage && localStorage.getItem('hacker_mode')) || 'minimal';
-      setMode(saved);
-      buttons.forEach(btn => btn.addEventListener('click', () => setMode(btn.dataset.mode)));
-    };
-    document.addEventListener('DOMContentLoaded', buttonsInit);
-  </script>
+  <!-- keep the matrix script -->
+  <script src="{{ '/assets/js/matrix.js' | relative_url }}" defer></script>
 </body>
-</html>
