@@ -215,3 +215,6 @@ To initiate the reverse shell, I triggered the notification using the bell icon.
 - [CVE Details: CVE-2018-9276](https://www.cvedetails.com/cve/CVE-2018-9276/)
 - [PRTG 18.2.39 Command Injection Vulnerability - Codewatch](https://codewatch.org/2018/06/25/prtg-18-2-39-command-injection-vulnerability/)
 
+
+
+

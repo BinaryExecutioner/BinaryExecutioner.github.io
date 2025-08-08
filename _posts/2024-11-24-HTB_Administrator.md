@@ -354,3 +354,6 @@ python3 /home/kali/Red_Team/Tools/impacket/examples/psexec.py administrator@10.1
 
 [NXC Cheatsheet](https://github.com/seriotonctf/cme-nxc-cheat-sheet)
 
+
+
+
