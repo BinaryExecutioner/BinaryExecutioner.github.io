@@ -145,3 +145,12 @@ jekyll-archives:
 permalink: /:categories/:year/:month/:day/:title/
 plugins:
 - jekyll-feed
+exclude:
+  - vendor
+  - vendor/**/*
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - package.json
+  - package-lock.json
+  - yarn.lock
