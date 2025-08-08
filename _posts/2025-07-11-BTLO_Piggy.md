@@ -2,7 +2,7 @@
 title: "Piggy Walkthrough - BTLO Labs"
 date: 2025-07-10 19:00:00 +0530
 categories: [Capture the Flags, Windows]
-tags: [BTLO,wireshark,MITRE]   
+tags: [BTLO,wireshark,MITRE, forensics]   
 description: "Walkthrough of PIGGY invesigation"
 ---
 
@@ -109,8 +109,6 @@ The first TXT request was observed at:
 
 ![image.png](assets/img/Piggy/image%206.png)
 
-
-
 **Question 2:**  
 Change the display format to `UTC Date and Time of Day`.  
 What is the date and timestamp of the first TXT record? *(Format: YYYY-MM-DD HH:MM:SS — 3 points)*
@@ -131,7 +129,11 @@ This activity — where the attacker uses **DNS TXT records for C2 communication
 **MITRE ATT&CK:**  
 **T1071.004 – Application Layer Protocol: DNS**
 
-> Adversaries may communicate using application layer protocols such as DNS to bypass traditional network defenses.
+Adversaries may communicate using application layer protocols such as DNS to bypass traditional network defenses.
 
 🔗 [MITRE ATT&CK - T1071.004](https://attack.mitre.org/techniques/T1071/004/)
 
+### Disclaimer
+This walkthrough is intended for educational and ethical purposes only. All analysis was performed in a controlled environment using simulated traffic provided by **BlueTeam Labs Online**.  
+No part of this content should be used to target or attack real-world systems without proper authorization.  
+Some investigative steps and insights reference official documentation, threat intel platforms, and community research to ensure accuracy. Full credit goes to the original authors and tool creators.

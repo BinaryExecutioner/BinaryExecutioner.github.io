@@ -1,0 +1,11 @@
+---
+layout: default
+title: Tags
+---
+<h2>Tags</h2>
+<ul>
+  {% assign tags = site.tags %}
+  {% for tag in tags %}
+    <li><span class="tag">#{{ tag[0] }}</span> ({{ tag[1].size }})</li>
+  {% endfor %}
+</ul>

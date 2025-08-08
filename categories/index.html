@@ -1,0 +1,14 @@
+---
+layout: default
+title: Categories
+---
+<h2>Categories</h2>
+<ul>
+{% assign grouped = site.posts | group_by_exp: 'post', 'post.categories' %}
+{% for group in grouped %}
+  {% assign names = group.name | split: ',' %}
+  <li>
+    {% for n in names %}<span class="chip">{{ n | strip }}</span>{% endfor %}
+  </li>
+{% endfor %}
+</ul>
