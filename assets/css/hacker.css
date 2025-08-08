@@ -1,21 +1,31 @@
-/* --- Minimal header with categories --- */
-.catbar { display: flex; gap: 12px; }
-.catbar a {
-  color: var(--green);
-  border: 1px solid var(--border);
-  padding: 6px 10px;
-  border-radius: 8px;
-  text-decoration: none;
+:root{
+  --green:#00ff66;
+  --green-soft:#00e68a;
+  --green-dim:#00b35a;
+  --bg:#000000;
+  --bg-2:#0a0a0a;
+  --border:#00ff66aa;
 }
-.catbar a:hover { color: #00ff99; text-decoration: none; }
-
-/* Make brand a link but keep look */
-.brand { font-size: 20px; margin-right: auto; color: var(--green); text-decoration: none; }
-.brand:hover { text-decoration: underline; }
-
-/* Hide any leftover mode buttons/badge if cached HTML still has them */
-.btn, .badge { display: none !important; }
-
-/* Ensure Matrix canvas never shows (if some old page still has it) */
-#matrixCanvas { display: none !important; }
-
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--green);
+     font-family:"Courier New", Courier, monospace;line-height:1.7}
+a{color:#00ff99;text-decoration:none}
+a:hover{text-decoration:underline}
+.wrapper{max-width:1100px;margin:0 auto;padding:16px}
+.layout{display:block}
+.content{max-width:840px;margin:0 auto}
+.toolbar{position:sticky;top:0;z-index:50;background:rgba(0,0,0,0.85);
+  border-bottom:1px solid var(--border);padding:10px 14px;display:flex;gap:12px;align-items:center}
+.brand{font-size:20px;margin-right:auto;color:var(--green);text-decoration:none}
+.brand .cursor{animation: blink 1.1s steps(1,end) infinite}
+@keyframes blink{50%{opacity:0}}
+.catbar{display:flex;gap:12px}
+.catbar a{color:var(--green);border:1px solid var(--border);padding:6px 10px;border-radius:8px;text-decoration:none}
+.catbar a:hover{color:#00ff99;text-decoration:none}
+.post-card{border:1px solid var(--border);padding:16px;margin-bottom:16px;background:var(--bg-2);border-radius:10px}
+pre{background:#001a0d;color:#00ff66;border:1px solid var(--border);border-radius:10px;padding:14px;overflow:auto}
+pre code{background:transparent;border:0;padding:0}
+code{background:#001a0d;color:#00ff66;border:1px solid var(--border);padding:2px 6px;border-radius:6px}
+img{max-width:100%;height:auto;border:1px solid var(--border);background:#001a0d}
+footer.site-footer{margin-top:40px;opacity:0.9}
+#matrixCanvas{display:none !important} /* make sure matrix never shows */

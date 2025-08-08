@@ -1,5 +1,5 @@
-# _config.yml (drop-in or merge these keys)
-baseurl: ""
+# Safe keys to merge if your build is acting up
+baseurl: ""    # for user sites like username.github.io
 
 theme: null
 

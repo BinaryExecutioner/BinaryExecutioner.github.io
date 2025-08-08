@@ -1,9 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title | default: site.name }}</title>
+  <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | strip_newlines | truncate: 160 }}" />
+  <link rel="stylesheet" href="{{ '/assets/css/hacker.css' | relative_url }}" />
+</head>
 <body class="minimal">
   <div class="toolbar wrapper">
-    <!-- Brand goes Home -->
     <a class="brand" href="{{ '/' | relative_url }}">$ ./{{ site.title | default: 'blog' | downcase | replace: ' ', '_' }} <span class="cursor">█</span></a>
-
-    <!-- Category nav (no mode buttons) -->
     <nav class="catbar">
       <a href="{{ '/red-teaming/' | relative_url }}">Red Teaming</a>
       <a href="{{ '/blue-teaming/' | relative_url }}">Blue Teaming</a>
@@ -28,3 +34,4 @@
     </main>
   </div>
 </body>
+</html>
