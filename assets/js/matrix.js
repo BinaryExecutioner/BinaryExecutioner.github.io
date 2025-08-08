@@ -13,7 +13,7 @@
   }
   window.addEventListener('resize', resize);
   function draw(){
-    if (getComputedStyle(canvas).display === 'none') return; // skip when hidden
+    if (getComputedStyle(canvas).display === 'none') return;
     ctx.fillStyle = 'rgba(0,0,0,0.08)';
     ctx.fillRect(0,0,canvas.width,canvas.height);
     ctx.fillStyle = '#0F0';

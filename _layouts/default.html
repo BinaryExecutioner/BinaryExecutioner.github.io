@@ -1,16 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title | default: site.name }}</title>
+  <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | strip_newlines | truncate: 160 }}" />
+  <link rel="stylesheet" href="{{ '/assets/css/hacker.css' | relative_url }}" />
+</head>
 <body class="minimal">
-  <!-- Canvas stays; only visible in Matrix modes -->
+  <!-- Matrix canvas (only visible in Matrix modes) -->
   <canvas id="matrixCanvas"></canvas>
 
   <div class="toolbar wrapper">
     <div class="brand">$ ./{{ site.title | default: 'blog' | downcase | replace: ' ', '_' }} <span class="cursor">█</span></div>
-
-    <!-- the four mode buttons -->
     <button class="btn" data-mode="minimal" aria-pressed="true">Minimal</button>
     <button class="btn" data-mode="sidebar">Sidebar</button>
     <button class="btn" data-mode="matrix">Matrix</button>
     <button class="btn" data-mode="sidebarMatrix">Sidebar + Matrix</button>
-
     <span class="badge">Green-on-Black · Courier New</span>
   </div>
 
@@ -30,10 +36,9 @@
     </main>
   </div>
 
-  <!-- Matrix rain (only shows when body has .matrix or .sidebarMatrix) -->
   <script src="{{ '/assets/js/matrix.js' | relative_url }}" defer></script>
   <script>
-    // Mode toggling (default to Minimal = plain black/green)
+    // Mode toggling (default is Minimal = plain black/green)
     document.addEventListener('DOMContentLoaded', () => {
       const buttons = document.querySelectorAll('.btn[data-mode]');
       const setMode = (mode) => {
@@ -47,3 +52,4 @@
     });
   </script>
 </body>
+</html>
