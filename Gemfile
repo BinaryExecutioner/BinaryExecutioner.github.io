@@ -1,5 +1,8 @@
 source "https://rubygems.org"
 
-# Pin to the GitHub Pages bundle (includes Jekyll + common plugins like jekyll-feed)
 gem "github-pages", group: :jekyll_plugins
-gem "webrick", "~> 1.8"  # needed for `jekyll serve` on Ruby 3+
+gem "webrick", "~> 1.8"
+gem "faraday-retry"         # quiets Faraday v2 warning
+
+# Install html-proofer in the CI bundle
+gem "html-proofer", "~> 5.0"
