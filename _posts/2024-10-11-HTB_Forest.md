@@ -1,4 +1,4 @@
----
+﻿---
 title: 'Forest Walkthrough: Exploiting AS-REP Roasting and Misconfigured AD Permissions
   to Compromise the Domain Controller.'
 date: 2024-11-10 15:00:00 +0530
@@ -207,7 +207,7 @@ SMB 10.10.10.161 445 FOREST [-] htb.local\guest: STATUS_ACCOUNT_DISABLED
 
 ### RPC Over SMB
 
-> 💡 **RPC over SMB** allows querying Windows services and AD data, enabling functions like **SAMR** for user and group data retrieval. This can be useful for enumerating accounts and permissions in an environment with restricted SMB access.
+> ðŸ’¡ **RPC over SMB** allows querying Windows services and AD data, enabling functions like **SAMR** for user and group data retrieval. This can be useful for enumerating accounts and permissions in an environment with restricted SMB access.
 
 Since anonymous login is enabled on SMB, leveraged `rpcclient` to enumerate users.
 
@@ -296,7 +296,7 @@ This search reveals several `sAMAccountName` entries, including some interesting
 
 ### Checking for Users with Kerberos Pre-Auth Disabled
 
-Kerberos Pre-Auth prevents attackers from requesting a TGT without proving knowledge of the user’s password. If Pre-Auth is disabled, attackers can potentially request TGTs for valid usernames and perform offline cracking (AS-REP roasting) to recover the password.
+Kerberos Pre-Auth prevents attackers from requesting a TGT without proving knowledge of the userâ€™s password. If Pre-Auth is disabled, attackers can potentially request TGTs for valid usernames and perform offline cracking (AS-REP roasting) to recover the password.
 
 Normal Kerberos Authentication flow
 
@@ -475,3 +475,4 @@ This provided an Administrator shell, completing the privilege escalation proces
 ## Disclaimer:
 
 *The techniques and tools discussed in this walkthrough are intended solely for educational purposes and to help improve cybersecurity awareness. Please conduct any penetration testing activities only on systems that you own or have explicit permission to test. Unauthorized access to computer systems is illegal and punishable by law. The author does not take responsibility for any misuse of the information provided*
+

