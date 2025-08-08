@@ -141,3 +141,5 @@ jekyll-archives:
     tag: /tags/:name/
     category: /categories/:name/
 permalink: /:categories/:year/:month/:day/:title/
+plugins:
+- jekyll-feed

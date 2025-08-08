@@ -1,11 +1,17 @@
 ---
-title: "Cicada Walkthrough: Exploiting Shared Access from Guest User Privileges"
+title: 'Cicada Walkthrough: Exploiting Shared Access from Guest User Privileges'
 date: 2024-10-30 20:00:00 +0530
-categories: [Capture the Flags, Windows]
-tags: [HTB,smb,credential_compromise,ldap,on-prem]   
-description: "Walkthrough of HTB's Cicada machine"
+categories:
+- Capture the Flags
+- Windows
+tags:
+- HTB
+- smb
+- credential_compromise
+- ldap
+- on-prem
+description: Walkthrough of HTB's Cicada machine
 ---
-
 ### Recon
 
 To begin the reconnaissance phase, a full port scan was conducted using Nmap to identify open TCP ports on the target. The scan was optimized for speed and aimed at discovering all ports:
@@ -267,7 +273,7 @@ SMB         10.10.11.35     445    CICADA-DC        SYSVOL          READ        
 
 Leveraging these credentials for further domain enumeration.
 
-![image.png](assets/img/Cicada/image.png)
+![image.png]({ '/assets/img/Cicada/image.png' | relative_url })
 
 Filtering Distinguished Names and Descriptions for Interesting Strings
 
@@ -337,15 +343,15 @@ Write-Host "Backup completed successfully. Backup file saved to: $backupFilePath
 The script contains a password for the backup account emily.oscars.
 The user has READ, WRITE access to C$ share 
 
-![image.png](assets/img/Cicada/image%201.png)
+![image.png]({ '/assets/img/Cicada/image%201.png' | relative_url })
 
 Logging into the share as “emily.oscars”
 
-![image.png](assets/img/Cicada/image%202.png)
+![image.png]({ '/assets/img/Cicada/image%202.png' | relative_url })
 
 Fetching the flag from the user desktop
 
-![image.png](assets/img/Cicada/image%203.png)
+![image.png]({ '/assets/img/Cicada/image%203.png' | relative_url })
 
 Logged in to the machine as emily.oscars leveraging “Evil-Winrm”.
 
@@ -405,11 +411,11 @@ User emily.oscars has the Backup privilege enabled. Uploading the necessary modu
 
 Using robocopy to copy the Administrator’s desktop files to a temporary folder.
 
-![image.png](assets/img/Cicada/image%204.png)
+![image.png]({ '/assets/img/Cicada/image%204.png' | relative_url })
 
 Accessing root.txt
 
-![image.png](assets/img/Cicada/image%205.png)
+![image.png]({ '/assets/img/Cicada/image%205.png' | relative_url })
 
 ---
 ### References

@@ -1,12 +1,15 @@
 ---
-title: "Netmon Walkthrough: Exploiting PRTG's CVE-2018-9276"
+title: 'Netmon Walkthrough: Exploiting PRTG''s CVE-2018-9276'
 date: 2024-11-03 11:40:00 +0530
-categories: [Capture the Flags, Windows]
-tags: [HTB,ftp,standalone]   
-description: "Walkthrough of HTB's Netmon machine"
+categories:
+- Capture the Flags
+- Windows
+tags:
+- HTB
+- ftp
+- standalone
+description: Walkthrough of HTB's Netmon machine
 ---
-
-
 ## Recon
 
 To begin the reconnaissance phase, a full port scan was conducted using Nmap to identify open TCP ports on the target. The scan was optimized for speed and aimed at discovering all ports:
@@ -97,7 +100,7 @@ Host script results:
 |_  message_signing: disabled (dangerous, but default)
 ```
 Since the HTTP port is open, I accessed it in a browser, which revealed a login page for the PRTG Network Monitor.
-![image.png](assets/img/Netmon/image.png)
+![image.png]({ '/assets/img/Netmon/image.png' | relative_url })
 
 ## FootHold & Privilege escalation
 
@@ -117,13 +120,13 @@ Name (10.10.10.152:kali): anonymous
 
 Once logged in, I listed the available files:
 
-![Listing files](assets/img/Netmon/image%201.png)
+![Listing files]({ '/assets/img/Netmon/image%201.png' | relative_url })
 
 ### Fetching `user.txt`
 
 I retrieved the `user.txt` file as part of the initial foothold:
 
-![Fetching user.txt](assets/img/Netmon/image%202.png)
+![Fetching user.txt]({ '/assets/img/Netmon/image%202.png' | relative_url })
 
 ### PRTG Configuration Directory
 
@@ -135,19 +138,19 @@ PRTG Network Monitor stores its configuration files in the PRTG data directory o
 
 Navigating to this folder revealed a few interesting files, as shown below:
 
-![Interesting files in directory](assets/img/Netmon/image%203.png)
+![Interesting files in directory]({ '/assets/img/Netmon/image%203.png' | relative_url })
 
 ### Downloading Configuration Files
 
 I proceeded to download all files of interest:
 
-![Downloading files](assets/img/Netmon/image%204.png)
+![Downloading files]({ '/assets/img/Netmon/image%204.png' | relative_url })
 
 ### Searching for Credentials
 
 I searched these configuration files for any credentials related to the default admin user, `prtgadmin`. While the “new” configuration files did not contain any useful information, I found a backup file that included a password for `prtgadmin`:
 
-![Found credentials](assets/img/Netmon/image%205.png)
+![Found credentials]({ '/assets/img/Netmon/image%205.png' | relative_url })
 
 ### Attempting Login
 
@@ -155,7 +158,7 @@ I tried logging into the PRTG Network Monitor web interface with the found crede
 
 Since the configuration file was last saved in 2018, I modified the password to `PrTg@dmin2019` and successfully logged in:
 
-![Successful login](assets/img/Netmon/image%206.png)
+![Successful login]({ '/assets/img/Netmon/image%206.png' | relative_url })
 
 ### PRTG Network Monitor Version and Privileges
 
@@ -169,7 +172,7 @@ According to CVE details and an excellent blog post by [Codewatch](https://codew
 
 To exploit this, I navigated to the “Notifications” section under “Account Settings” in the “Setup” dropdown menu:
 
-![Navigating to Notifications](assets/img/Netmon/image%207.png)
+![Navigating to Notifications]({ '/assets/img/Netmon/image%207.png' | relative_url })
 
 > 💡 **Vulnerability Note**: An argument supplied in the “Parameter” field of the “Notifications” configuration is passed directly into the PowerShell script without any sanitization, allowing an attacker to inject arbitrary PowerShell code.
 
@@ -198,13 +201,13 @@ SQBFAFgAKABuAGUAdwAtAG8AYgBqAGUAYwB0ACAAbgBlAHQALgB3AGUAYgBjAGwAaQBlAG4AdAApAC4A
 
 I then modified the parameter in the Notifications configuration to download and execute “Invoke-PowerShellTcp,” effectively setting up a reverse shell:
 
-![Modifying the parameter](assets/img/Netmon/image%208.png)
+![Modifying the parameter]({ '/assets/img/Netmon/image%208.png' | relative_url })
 
 ### Triggering the Shell
 
 To initiate the reverse shell, I triggered the notification using the bell icon. This action executed the command and established a connection back to my listener, providing a shell with SYSTEM privileges.
 
-![Catching the shell](assets/img/Netmon/image%209.png)
+![Catching the shell]({ '/assets/img/Netmon/image%209.png' | relative_url })
 
 ## References
 

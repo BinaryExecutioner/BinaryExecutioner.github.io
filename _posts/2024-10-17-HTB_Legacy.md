@@ -1,11 +1,15 @@
 ---
-title: "Legacy Walkthrough: Exploiting vulnerable Server Service"
+title: 'Legacy Walkthrough: Exploiting vulnerable Server Service'
 date: 2024-10-18 12:00:00 +0530
-categories: [Capture the Flags, Windows]
-tags: [HTB,smb,standalone]   
-description: "Walkthrough of HTB's Legacy machine"
+categories:
+- Capture the Flags
+- Windows
+tags:
+- HTB
+- smb
+- standalone
+description: Walkthrough of HTB's Legacy machine
 ---
-
 *Legacy is a fairly straightforward beginner-level machine which demonstrates the potential security risks of SMB on Windows. Only one publicly available exploit is required to obtain administrator access.*
 
 ## Recon
@@ -140,7 +144,7 @@ SMB also provides a communication channel for RPC (Remote Procedure Call). The S
 
 ### Exploiting through MetaSploit
 As we are aware of that the machine is vulnerable to MS08-067, searching for any available exploits using search in the msfconsole
-![msfconsole](assets/img/Legacy/msf_search.png)
+![msfconsole]({ '/assets/img/Legacy/msf_search.png' | relative_url })
 Using the same exploit to pwn the machine
 
 ```bash
