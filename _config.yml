@@ -1,6 +1,10 @@
+title: Binary Executioner
+description: >- 
+  Personal blog for red teaming, blue teaming, threat hunting, and malware development.
+repository: BinaryExecutioner/BinaryExecutioner.github.io
 # Safe keys to merge if your build is acting up
 baseurl: ""    # for user sites like username.github.io
-
+repository: BinaryExecutioner/BinaryExecutioner.github.io
 theme: null
 
 plugins:
