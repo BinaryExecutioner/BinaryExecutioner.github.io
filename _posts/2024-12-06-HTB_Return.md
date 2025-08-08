@@ -69,13 +69,13 @@ No interesting information found in the UDP Scan results
 ### HTTP Recon
 
 Accessing port 80 displays a web page labeled 'HTB Printer Admin Panel'.
-![image.png]({ '/assets/img/Return/image%201.png' | relative_url })
+![image.png]({{ '/assets/img/Return/image%201.png' | relative_url }})
 
 Most available sections, such as 'Fax' and 'Troubleshooting,' are static, but the 'Settings' page includes an intriguing form with fields for the server address, port, username, and password, as shown below.
-![image.png]({ '/assets/img/Return/image%202.png' | relative_url })
+![image.png]({{ '/assets/img/Return/image%202.png' | relative_url }})
 
 When I submitted the form, I observed that only the IP address field was forwarded to the server. Modifying the username and password fields did not result in any changes to the request.
-![image.png]({ '/assets/img/Return/image%203.png' | relative_url })
+![image.png]({{ '/assets/img/Return/image%203.png' | relative_url }})
 
 Further research revealed interesting information
 Printers can use LDAP (Lightweight Directory Access Protocol) to query the Active Directory for user details, such as email addresses, usernames, and group memberships. This allows features like:
@@ -87,7 +87,7 @@ For this to work, the printer needs LDAP credentials (often a service account li
 
 I modified the IP address to point to my machine and set up a Netcat listener to intercept the data submitted by the form possibly revealing the password.
 
-![image.png]({ '/assets/img/Return/image%204.png' | relative_url })
+![image.png]({{ '/assets/img/Return/image%204.png' | relative_url }})
 
 The incoming request revealed interesting information, which indeed appears to be a password.
 
@@ -103,15 +103,15 @@ connect to [10.10.16.30] from (UNKNOWN) [10.10.11.108] 63453
 ### SMB Recon
 
 To validate the enumerated credentials, I used  netexec to enumerate SMB shares. The results confirmed that the credentials are valid, with the user having interesting 'READ' and 'WRITE' privileges on certain shares.
-![image.png]({ '/assets/img/Return/image.png' | relative_url })
+![image.png]({{ '/assets/img/Return/image.png' | relative_url }})
 
 ## Remote Access Using Compromised Credentials
 
 I attempted to log in to the machine using the compromised credentials, as shown below:
-![image.png]({ '/assets/img/Return/image%206.png' | relative_url })
+![image.png]({{ '/assets/img/Return/image%206.png' | relative_url }})
 
 Navigating to the Users directory reveals two users: svc-printer and Administrator
-![image.png]({ '/assets/img/Return/image%205.png' | relative_url })
+![image.png]({{ '/assets/img/Return/image%205.png' | relative_url }})
 
 Accessing "user.txt" on the svc-printer's desktop reveals first flag.
 
@@ -120,13 +120,13 @@ Accessing "user.txt" on the svc-printer's desktop reveals first flag.
 ### Method - 1
 
 Enumerating privileges of "svc-printer" using *whoami* command
-![image.png]({ '/assets/img/Return/image%207.png' | relative_url })
+![image.png]({{ '/assets/img/Return/image%207.png' | relative_url }})
 
 Since the user has the Backup privilege enabled. Uploading the necessary module to leverage this privilege for replication.
-![image.png]({ '/assets/img/Return/image%208.png' | relative_url })
+![image.png]({{ '/assets/img/Return/image%208.png' | relative_url }})
 
 Using robocopy to copy the Administratorâ€™s desktop files to a temporary folder.
-![image.png]({ '/assets/img/Return/image%209.png' | relative_url })
+![image.png]({{ '/assets/img/Return/image%209.png' | relative_url }})
 
 Followed by accessing root.txt
 
@@ -181,15 +181,15 @@ LPORT => 8888
 
 The same issue was observed when using the Metasploit Framework; the reverse shell terminated after a few seconds.
 
-![image.png]({ '/assets/img/Return/image%2010.png' | relative_url })
+![image.png]({{ '/assets/img/Return/image%2010.png' | relative_url }})
 
 To stabilize the session, I migrated the process to a more suitable one using the migrate <pid> command.
 
-![image.png]({ '/assets/img/Return/image%2011.png' | relative_url })
+![image.png]({{ '/assets/img/Return/image%2011.png' | relative_url }})
 
 Spawning the shell
 
-![image.png]({ '/assets/img/Return/image%2012.png' | relative_url })
+![image.png]({{ '/assets/img/Return/image%2012.png' | relative_url }})
 
 ## Disclaimer
 

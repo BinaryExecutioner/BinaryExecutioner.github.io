@@ -25,7 +25,7 @@ tcp.dstport == 22
 
 From there, I navigated to `Statistics > Conversations`, checked **â€œLimit to display filterâ€**, and found the remote IP `35.211.33.16`. The total bytes transferred to this IP from the internal machine was approximately **1123M** â€” a clear indicator of potential data exfiltration over SSH.
 
-![image.png]({ '/assets/img/Piggy/image%201.png' | relative_url })
+![image.png]({{ '/assets/img/Piggy/image%201.png' | relative_url }})
 
 
 ### PCAP Two: OSINT-Based Malware Attribution
@@ -49,7 +49,7 @@ Here are the IPs observed in the PCAP conversations:
 Excluding the internal IP, I started investigating the others using tools like **Scamalytics**, **VirusTotal**, and **Google**.
 
 The IP `31.184.253.37` caught my attention. Scamalytics flagged it with a **"Medium Risk"** reputation, and after digging deeper, I found that it had been associated with **Trickbot loader** campaigns in the past.
-![image.png]({ '/assets/img/Piggy/image%203.png' | relative_url })
+![image.png]({{ '/assets/img/Piggy/image%203.png' | relative_url }})
 
 Reference:  
 [Malicious Activity Linked to Trickbot Loader - ANY.RUN](https://any.run/report/387682995c339dd34e1b7943d7bcb84a7c1a3b538ffa10cf5a1555361a40a0fd/c066e0e9-2a69-4927-9d24-11e2888ffbf9#Network)
@@ -71,7 +71,7 @@ These stood out due to communication over non-standard ports. Using `whois.domai
 - `194.233.171.171` â†’ **AS63949**
 - `104.236.57.24` â†’ **AS14061**
 
-![image.png]({ '/assets/img/Piggy/image%204.png' | relative_url })
+![image.png]({{ '/assets/img/Piggy/image%204.png' | relative_url }})
 
 **Question 2:**  
 What malware category have these IPs been historically linked to? *(Format: MalwareType â€” 3 points)*
@@ -103,7 +103,7 @@ dns.qry.type == 16
 
 This filter isolates DNS TXT record queries â€” often used for exfiltration or C2 signaling.
 
-![image.png]({ '/assets/img/Piggy/image%205.png' | relative_url })
+![image.png]({{ '/assets/img/Piggy/image%205.png' | relative_url }})
 
 The first TXT request was observed at:
 
@@ -111,7 +111,7 @@ The first TXT request was observed at:
 8.527712 seconds
 ```
 
-![image.png]({ '/assets/img/Piggy/image%206.png' | relative_url })
+![image.png]({{ '/assets/img/Piggy/image%206.png' | relative_url }})
 
 **Question 2:**  
 Change the display format to `UTC Date and Time of Day`.  
@@ -122,7 +122,7 @@ Switching to UTC format clearly shows the time of the first TXT query:
 **Timestamp:**  
 (Refer to screenshot below)
 
-![image.png]({ '/assets/img/Piggy/image%207.png' | relative_url })
+![image.png]({{ '/assets/img/Piggy/image%207.png' | relative_url }})
 
 
 **Question 3:**  

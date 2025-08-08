@@ -271,7 +271,7 @@ SMB         10.10.11.35     445    CICADA-DC        SYSVOL          READ        
 
 Leveraging these credentials for further domain enumeration.
 
-![image.png]({ '/assets/img/Cicada/image.png' | relative_url })
+![image.png]({{ '/assets/img/Cicada/image.png' | relative_url }})
 
 Filtering Distinguished Names and Descriptions for Interesting Strings
 
@@ -341,15 +341,15 @@ Write-Host "Backup completed successfully. Backup file saved to: $backupFilePath
 The script contains a password for the backup account emily.oscars.
 The user has READ, WRITE access to C$ share 
 
-![image.png]({ '/assets/img/Cicada/image%201.png' | relative_url })
+![image.png]({{ '/assets/img/Cicada/image%201.png' | relative_url }})
 
 Logging into the share as â€œemily.oscarsâ€
 
-![image.png]({ '/assets/img/Cicada/image%202.png' | relative_url })
+![image.png]({{ '/assets/img/Cicada/image%202.png' | relative_url }})
 
 Fetching the flag from the user desktop
 
-![image.png]({ '/assets/img/Cicada/image%203.png' | relative_url })
+![image.png]({{ '/assets/img/Cicada/image%203.png' | relative_url }})
 
 Logged in to the machine as emily.oscars leveraging â€œEvil-Winrmâ€.
 
@@ -409,11 +409,11 @@ User emily.oscars has the Backup privilege enabled. Uploading the necessary modu
 
 Using robocopy to copy the Administratorâ€™s desktop files to a temporary folder.
 
-![image.png]({ '/assets/img/Cicada/image%204.png' | relative_url })
+![image.png]({{ '/assets/img/Cicada/image%204.png' | relative_url }})
 
 Accessing root.txt
 
-![image.png]({ '/assets/img/Cicada/image%205.png' | relative_url })
+![image.png]({{ '/assets/img/Cicada/image%205.png' | relative_url }})
 
 ---
 ### References

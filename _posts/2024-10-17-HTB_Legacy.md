@@ -142,7 +142,7 @@ SMB also provides a communication channel for RPC (Remote Procedure Call). The S
 
 ### Exploiting through MetaSploit
 As we are aware of that the machine is vulnerable to MS08-067, searching for any available exploits using search in the msfconsole
-![msfconsole]({ '/assets/img/Legacy/msf_search.png' | relative_url })
+![msfconsole]({{ '/assets/img/Legacy/msf_search.png' | relative_url }})
 Using the same exploit to pwn the machine
 
 ```bash

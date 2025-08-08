@@ -149,27 +149,27 @@ From the BloodHound results, it was evident that:
 1. Olivia has PSRemote access to the machine.
 2. Olivia possesses GenericAll permissions on the user account Michael, enabling full control over the account.
 
-![image.png]({ '/assets/img/Administrator/image.png' | relative_url })
+![image.png]({{ '/assets/img/Administrator/image.png' | relative_url }})
 
-![image.png]({ '/assets/img/Administrator/image%201.png' | relative_url })
+![image.png]({{ '/assets/img/Administrator/image%201.png' | relative_url }})
 
 Uploaded the Winpeas to discover any potentials vectors to escalate privileges on the machine. Unfortunately no interesting information found.
 
-![image.png]({ '/assets/img/Administrator/image%202.png' | relative_url })
+![image.png]({{ '/assets/img/Administrator/image%202.png' | relative_url }})
 
-![image.png]({ '/assets/img/Administrator/image%203.png' | relative_url })
+![image.png]({{ '/assets/img/Administrator/image%203.png' | relative_url }})
 
 ## Privilege Escalation to Michael
 
 With the identified permissions, I leveraged GenericAll to reset Michaelâ€™s password. This allowed me to escalate privileges to his account.
 
-![image.png]({ '/assets/img/Administrator/image%204.png' | relative_url })
+![image.png]({{ '/assets/img/Administrator/image%204.png' | relative_url }})
 
 Successfully logged in with Michael's account.
 
-![image.png]({ '/assets/img/Administrator/image%205.png' | relative_url })
+![image.png]({{ '/assets/img/Administrator/image%205.png' | relative_url }})
 
-![image.png]({ '/assets/img/Administrator/image%206.png' | relative_url })
+![image.png]({{ '/assets/img/Administrator/image%206.png' | relative_url }})
 
 Enumerated Michaelâ€™s privileges and group memberships. The BloodHound map revealed that Michael has the ForceChangePassword privilege on the user Benjamin.
 
@@ -184,7 +184,7 @@ Uploaded PowerView.ps1 to the target machine and executed the following command 
 
 Verified the password reset and used the updated credentials to log in to the FTP service with Benjamin's account:
 
-![image.png]({ '/assets/img/Administrator/image%207.png' | relative_url })
+![image.png]({{ '/assets/img/Administrator/image%207.png' | relative_url }})
 
 Successfully accessed the FTP server
 
@@ -252,18 +252,18 @@ No hashes loaded.
 
 With the cracked password (tekieromucho), the Backup.psafe3 file can now be opened using the Password Safe application or a compatible tool to revealing the password for Emily.
 
-![image.png]({ '/assets/img/Administrator/image%208.png' | relative_url })
+![image.png]({{ '/assets/img/Administrator/image%208.png' | relative_url }})
 
-![image.png]({ '/assets/img/Administrator/image%209.png' | relative_url })
+![image.png]({{ '/assets/img/Administrator/image%209.png' | relative_url }})
 
 After identifying and compromising Emily's credentials, I logged into the machine using Evil-WinRM:
 
-![image.png]({ '/assets/img/Administrator/image%2010.png' | relative_url })
+![image.png]({{ '/assets/img/Administrator/image%2010.png' | relative_url }})
 
 ## Enumerating Privileges with BloodHound
 
 Using BloodHound, I determined that Emily has the GenericWrite privilege over the account Ethan. This privilege allows modifying Ethan's attributes, enabling further exploitation.
-![image.png]({ '/assets/img/Administrator/image%2011.png' | relative_url })
+![image.png]({{ '/assets/img/Administrator/image%2011.png' | relative_url }})
 
 Since emily has "GenericWrite" privileges on ethan, adding "serviceprincipalname" to the user "ethan". Making ethan as service account.
 
@@ -315,7 +315,7 @@ hashcat -m 13100 -a 0 ./ethan_pass.txt /usr/share/wordlists/rockyou.txt
 
 From the BloodHound analysis, it was evident that Ethan had DCSync rights. This means Ethan's account was misconfigured to possess permissions typically reserved for Domain Admins or similar privileged roles, allowing him to replicate directory services data.
 
-![image.png]({ '/assets/img/Administrator/image%2011.png' | relative_url })
+![image.png]({{ '/assets/img/Administrator/image%2011.png' | relative_url }})
 
 I used the secretsdump.py tool from Impacket to extract the AD database credentials, including NTLM hashes.
 
