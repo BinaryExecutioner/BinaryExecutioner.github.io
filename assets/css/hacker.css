@@ -29,3 +29,34 @@ code{background:#001a0d;color:#00ff66;border:1px solid var(--border);padding:2px
 img{max-width:100%;height:auto;border:1px solid var(--border);background:#001a0d}
 footer.site-footer{margin-top:40px;opacity:0.9}
 #matrixCanvas{display:none !important} /* make sure matrix never shows */
+/* --- Tag badges --- */
+.tags { display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 12px; }
+.tag { display:inline-block; padding:4px 10px; border:1px solid var(--border); border-radius:999px; font-size:12px; letter-spacing:.03em; color:var(--green); text-decoration:none }
+.tag:hover { background:#001b0b; text-decoration:none }
+.tag .count { opacity:.8; margin-left:4px }
+/* Tag cloud */
+.tag-cloud { display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 16px; }
+.tag-section { scroll-margin-top: 80px; }
+/* === Tag badges === */
+/* === Tag badges === */
+.tags { display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 12px; }
+.tag { display:inline-block; padding:4px 10px; border:1px solid var(--border); border-radius:999px; font-size:12px; letter-spacing:.03em; color:var(--green); text-decoration:none }
+.tag:hover { background:#001b0b; text-decoration:none }
+.tag .count { opacity:.8; margin-left:4px }
+/* Tag cloud & sections */
+.tag-cloud { display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 16px; }
+.tag-section { scroll-margin-top: 80px; }
+/* Highlight active tag on home filter */
+.tag.active { background:#002612; box-shadow:0 0 0 1px var(--border) inset; }
+#tag-filter { color: var(--green); opacity:.9; }
+/* Category two-column layout */
+.category-page{display:flex; gap:24px; align-items:flex-start}
+.category-main{flex:1; min-width:0}
+.category-sidebar{width:260px; position:sticky; top:72px}
+.category-sidebar .box{border:1px solid var(--border); padding:12px; border-radius:10px; background:#050505}
+.tag-cloud{display:flex; flex-wrap:wrap; gap:8px}
+.filter-note{margin:8px 0 12px; opacity:0.9}
+/* Tag chips (no # sign) */
+.tags{display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 12px}
+.tag{display:inline-block; padding:4px 10px; border:1px solid var(--border); border-radius:999px; font-size:12px; text-decoration:none; color:var(--green)}
+.tag:hover{background:#001b0b; text-decoration:none}

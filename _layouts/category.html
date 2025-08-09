@@ -1,0 +1,39 @@
+---
+layout: default
+---
+<div class="category-page">
+  <main class="category-main">
+    {% assign cat = page.category | default: page.title %}
+    {% assign posts = site.categories[cat] %}
+    {% if posts == nil %}{% assign posts = site.categories[cat | downcase] %}{% endif %}
+
+    {% for post in posts %}
+      <article class="post-card" data-tags="{{ post.tags | join:' ' | downcase }}">
+        <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+        <div class="meta">{{ post.date | date: "%b %d, %Y" }}</div>
+        {% if post.tags and post.tags.size > 0 %}
+          <div class="tags">
+            {% for t in post.tags %}
+              <!-- FIX: build base and query separately -->
+              <a class="tag" href="{{ '/' | relative_url }}?t={{ t | slugify }}">{{ t }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </article>
+    {% endfor %}
+  </main>
+
+  <aside class="category-sidebar">
+    <div class="box">
+      <h3>Tags</h3>
+      <div class="tag-cloud">
+        {% assign sorted = site.tags | sort %}
+        {% for pair in sorted %}
+          {% assign name = pair[0] %}
+          <!-- FIX: build base and query separately -->
+          <a class="tag" href="{{ '/' | relative_url }}?t={{ name | slugify }}">{{ name }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </aside>
+</div>

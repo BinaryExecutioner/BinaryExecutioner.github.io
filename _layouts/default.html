@@ -15,17 +15,19 @@
       <a href="{{ '/blue-teaming/' | relative_url }}">Blue Teaming</a>
       <a href="{{ '/threat-hunting/' | relative_url }}">Threat Hunting</a>
       <a href="{{ '/malware-development/' | relative_url }}">Malware Development</a>
+      <a href="{{ '/tags/' | relative_url }}">Tags</a>
     </nav>
   </div>
 
   <div class="wrapper layout">
     <main class="content" id="content">
+    {% unless page.layout == 'post' or page.layout == 'category' or page.hide_title %}
       <header>
         <h1>{{ page.title | default: site.title }}</h1>
-        {% if page.subtitle %}<p class="subtitle">{{ page.subtitle }}</p>{% endif %}
-        {% if page.layout == 'home' and site.description %}<p>{{ site.description }}</p>{% endif %}
-      </header>
-
+          {% if page.subtitle %}<p class="subtitle">{{ page.subtitle }}</p>{% endif %}
+          {% if page.layout == 'home' and site.description %}<p>{{ site.description }}</p>{% endif %}
+    </header>
+{% endunless %}
       {{ content }}
 
       <footer class="site-footer">

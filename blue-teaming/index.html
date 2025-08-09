@@ -1,13 +1,6 @@
 ---
-layout: default
+layout: category
 title: Blue Teaming
+category: blue-teaming
+permalink: /blue-teaming/
 ---
-<h2>Blue Teaming</h2>
-{% assign cat_posts = site.posts | where_exp: "p", "p.categories contains 'blue-teaming'" %}
-{% for post in cat_posts %}
-  <article class="post-card">
-    <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
-    <div class="meta">{{ post.date | date: "%b %d, %Y" }}</div>
-    <p>{{ post.excerpt | default: post.content | strip_html | truncate: 220 }}</p>
-  </article>
-{% endfor %}

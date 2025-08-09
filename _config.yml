@@ -6,7 +6,9 @@ repository: BinaryExecutioner/BinaryExecutioner.github.io
 baseurl: ""    # for user sites like username.github.io
 repository: BinaryExecutioner/BinaryExecutioner.github.io
 theme: null
-
+defaults:
+  - scope: { path: "", type: "posts" }
+    values: { layout: post }
 plugins:
   - jekyll-feed
 
