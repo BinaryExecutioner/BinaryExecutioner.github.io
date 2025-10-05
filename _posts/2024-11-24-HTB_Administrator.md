@@ -75,7 +75,7 @@ No interesting information found in the UDP Scan results
 
 ### FTP Recon
 
-Since this was kinda assumed breach scenario we are provided with the user credentials â€˜Oliviaâ€™.
+Since this was kinda assumed breach scenario we are provided with the user credentials "Olivia".
 
 ```bash
 ftp 10.10.11.42
@@ -88,11 +88,11 @@ Password:
 ftp: Login failed
 ```
 
-The login attempt with Oliviaâ€™s credentials failed, and the error message suggests that her home directory is inaccessible. This indicates that the FTP share on the machine does not provide any useful access for this user.
+The login attempt with Olivia's credentials failed, and the error message suggests that her home directory is inaccessible. This indicates that the FTP share on the machine does not provide any useful access for this user.
 
 ### SMB Recon
 
-Given the open SMB port (445) and the provided credentials, I proceeded with SMB enumeration using theÂ **`netexec`**Â (**`nxc`**) tool. The goal was to leverage Oliviaâ€™s account to enumerate users on the system.
+Given the open SMB port (445) and the provided credentials, I proceeded with SMB enumeration using theÂ **`netexec`**(**`nxc`**) tool. The goal was to leverage Olivia's account to enumerate users on the system.
 
 ```bash
 nxc smb 10.10.11.42 -u Olivia -p 'ichliebedich'  --users    
@@ -161,7 +161,7 @@ Uploaded the Winpeas to discover any potentials vectors to escalate privileges o
 
 ## Privilege Escalation to Michael
 
-With the identified permissions, I leveraged GenericAll to reset Michaelâ€™s password. This allowed me to escalate privileges to his account.
+With the identified permissions, I leveraged GenericAll to reset Michael's password. This allowed me to escalate privileges to his account.
 
 ![image.png]({{ '/assets/img/Administrator/image%204.png' | relative_url }})
 
@@ -171,9 +171,9 @@ Successfully logged in with Michael's account.
 
 ![image.png]({{ '/assets/img/Administrator/image%206.png' | relative_url }})
 
-Enumerated Michaelâ€™s privileges and group memberships. The BloodHound map revealed that Michael has the ForceChangePassword privilege on the user Benjamin.
+Enumerated Michael's privileges and group memberships. The BloodHound map revealed that Michael has the ForceChangePassword privilege on the user Benjamin.
 
-Continuing the attack chain, I used Michaelâ€™s privileges to reset Benjaminâ€™s password.
+Continuing the attack chain, I used Michaelâ€™s privileges to reset Benjamin's password.
 
 Uploaded PowerView.ps1 to the target machine and executed the following command to reset Benjamin's password:
 
@@ -233,7 +233,7 @@ tekieromucho     (Backu)
 Use the "--show" option to display all of the cracked passwords reliably
 ```
 
-Tried with hashcat but it didnâ€™t work
+Tried with hashcat but it didn't work
 
 ```bash
 hashcat -m 6800 ./HASH.TXT /usr/share/wordlists/rockyou.txt
