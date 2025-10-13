@@ -343,7 +343,7 @@ The user has READ, WRITE access to C$ share
 
 ![image.png]({{ '/assets/img/Cicada/image%201.png' | relative_url }})
 
-Logging into the share as â€œemily.oscarsâ€
+Logging into the share as €œemily.oscars€
 
 ![image.png]({{ '/assets/img/Cicada/image%202.png' | relative_url }})
 
@@ -351,7 +351,7 @@ Fetching the flag from the user desktop
 
 ![image.png]({{ '/assets/img/Cicada/image%203.png' | relative_url }})
 
-Logged in to the machine as emily.oscars leveraging â€œEvil-Winrmâ€.
+Logged in to the machine as emily.oscars leveraging €œEvil-Winrm€.
 
 ```bash
 *Evil-WinRM* PS C:\Users\emily.oscars.CICADA\Documents> whoami /all

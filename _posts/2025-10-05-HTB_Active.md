@@ -6,6 +6,9 @@ tags:
 - HTB
 - Kerberoasting
 - CVE-2014-1812
+- Standalone-DC
+- On-Prem
+- Anonymous-Login
 description: "Walkthrough for HTB 'Active' machine — Recon, Enumeration, Exploitation and Privilege Escalation."
 ---
 
@@ -289,3 +292,7 @@ smb: \Users\Administrator\Desktop\> ls
 - **SMB hygiene**: Disable **SMBv1**, require **SMB signing** where feasible, and restrict anonymous/NULL sessions.  
 - **Least privilege & segmentation**: Keep admin tasks on admin workstations; segment DCs and management subnets.  
 - **SIEM hunting**: Add a rule to flag reads of `*\\SYSVOL\\*\\Groups.xml` and spikes in **TGS requests** for sensitive SPNs.
+
+### Disclaimer
+
+*The techniques and tools discussed in this walkthrough are intended solely for educational purposes and to help improve cybersecurity awareness. Please conduct any penetration testing activities only on systems that you own or have explicit permission to test. Unauthorized access to computer systems is illegal and punishable by law. The author does not take responsibility for any misuse of the information provided*

@@ -1,13 +1,13 @@
 ﻿---
-title: 'Administrator Walkthrough: Exploiting Active Directory Misconfigurations'
+title: 'Administrator Walkthrough: Exploiting Active Directory Misconfigurations - HTB'
 date: 2024-11-24 19:00:00 +0530
 categories: [red-teaming]
 tags:
 - HTB
-- ldap
-- on-prem
-- privesc
-- asrep
+- On-Prem
+- Standalone-DC
+- Kerberoasting
+- Credential-Harvesting
 description: Walkthrough of HTB's Administrator machine
 ---
 ## Initial Recon
@@ -92,7 +92,7 @@ The login attempt with Olivia's credentials failed, and the error message sugges
 
 ### SMB Recon
 
-Given the open SMB port (445) and the provided credentials, I proceeded with SMB enumeration using theÂ **`netexec`**(**`nxc`**) tool. The goal was to leverage Olivia's account to enumerate users on the system.
+Given the open SMB port (445) and the provided credentials, I proceeded with SMB enumeration using the **`netexec`**(**`nxc`**) tool. The goal was to leverage Olivia's account to enumerate users on the system.
 
 ```bash
 nxc smb 10.10.11.42 -u Olivia -p 'ichliebedich'  --users    
@@ -113,13 +113,13 @@ SMB         10.10.11.42     445    DC               emma                        
 
 The SMB enumeration was successful. Key observations:
 
-1. Oliviaâ€™s credentials (**`ichliebedich`**) are valid and provide access to SMB.
-2. The domain is identified asÂ **administrator.htb**, and the machine is runningÂ **Windows Server 2022 Build 20348 x64**.
-3. Multiple user accounts were enumerated, including **`michael`**,Â **`benjamin`**,Â **`emily`**,Â **`ethan`**,Â **`alexander`**,Â **`emma`**.
+1. Olivia's credentials (**`ichliebedich`**) are valid and provide access to SMB.
+2. The domain is identified as **administrator.htb**, and the machine is running **Windows Server 2022 Build 20348 x64**.
+3. Multiple user accounts were enumerated, including **`michael`**, **`benjamin`**, **`emily`**, **`ethan`**, **`alexander`**, **`emma`**.
 
 ### LDAP Recon
 
-To assess if any of the enumerated accounts had pre-authentication disabled (a common misconfiguration exploitable through AS-REP roasting), I used theÂ **`GetNPUsers.py`**Â script from the Impacket toolkit.
+To assess if any of the enumerated accounts had pre-authentication disabled (a common misconfiguration exploitable through AS-REP roasting), I used the **`GetNPUsers.py`** script from the Impacket toolkit.
 
 ```bash
 python3 /home/kali/Red_Team/Tools/impacket/examples/GetNPUsers.py administrator.htb/ -dc-ip 10.10.11.42 -no-pass -usersfile /home/kali/Red_Team/HTB/Administrator/users.txt -request  
@@ -134,7 +134,7 @@ Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies
 [-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)                                                                                    
 ```
 
-None of the enumerated accounts have theÂ **`UF_DONT_REQUIRE_PREAUTH`**Â flag set. This indicates that pre-authentication is enforced for all these accounts, mitigating the risk of exploitation through AS-REP roasting.
+None of the enumerated accounts have the **`UF_DONT_REQUIRE_PREAUTH`** flag set. This indicates that pre-authentication is enforced for all these accounts, mitigating the risk of exploitation through AS-REP roasting.
 
 ## Domain Enumeration
 
@@ -173,7 +173,7 @@ Successfully logged in with Michael's account.
 
 Enumerated Michael's privileges and group memberships. The BloodHound map revealed that Michael has the ForceChangePassword privilege on the user Benjamin.
 
-Continuing the attack chain, I used Michaelâ€™s privileges to reset Benjamin's password.
+Continuing the attack chain, I used Michael€™s privileges to reset Benjamin's password.
 
 Uploaded PowerView.ps1 to the target machine and executed the following command to reset Benjamin's password:
 
@@ -267,7 +267,7 @@ Using BloodHound, I determined that Emily has the GenericWrite privilege over th
 
 Since emily has "GenericWrite" privileges on ethan, adding "serviceprincipalname" to the user "ethan". Making ethan as service account.
 
-With the GenericWrite privilege, I added a serviceprincipalname attribute to Ethanâ€™s account, making it act as a service account. This change sets the stage for extracting a Kerberos TGS (Ticket-Granting Service).
+With the GenericWrite privilege, I added a serviceprincipalname attribute to Ethan€™s account, making it act as a service account. This change sets the stage for extracting a Kerberos TGS (Ticket-Granting Service).
 
 ```bash
 *Evil-WinRM* PS C:\Users\emily> Set-DomainObject -Identity ethan -Set @{serviceprincipalname='administrator/vegito'} -verbose

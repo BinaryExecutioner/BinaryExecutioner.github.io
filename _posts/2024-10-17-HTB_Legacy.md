@@ -4,8 +4,9 @@ date: 2024-10-18 12:00:00 +0530
 categories: [red-teaming]
 tags:
 - HTB
-- smb
-- standalone
+- Standalone-Windows-Machine
+- Exploit
+- CVE-2008-4250
 description: Walkthrough of HTB's Legacy machine
 ---
 *Legacy is a fairly straightforward beginner-level machine which demonstrates the potential security risks of SMB on Windows. Only one publicly available exploit is required to obtain administrator access.*

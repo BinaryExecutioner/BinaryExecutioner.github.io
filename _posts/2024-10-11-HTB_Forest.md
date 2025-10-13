@@ -296,7 +296,7 @@ This search reveals several `sAMAccountName` entries, including some interesting
 
 ### Checking for Users with Kerberos Pre-Auth Disabled
 
-Kerberos Pre-Auth prevents attackers from requesting a TGT without proving knowledge of the userâ€™s password. If Pre-Auth is disabled, attackers can potentially request TGTs for valid usernames and perform offline cracking (AS-REP roasting) to recover the password.
+Kerberos Pre-Auth prevents attackers from requesting a TGT without proving knowledge of the user€™s password. If Pre-Auth is disabled, attackers can potentially request TGTs for valid usernames and perform offline cracking (AS-REP roasting) to recover the password.
 
 Normal Kerberos Authentication flow
 

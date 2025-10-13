@@ -1,12 +1,10 @@
 ﻿---
-title: Piggy Walkthrough - BTLO Labs
+title: 'Piggy Walkthrough - BTLO Labs'
 date: 2025-07-10 19:00:00 +0530
 categories: [blue-teaming]
 tags:
 - BTLO
-- wireshark
-- MITRE
-- forensics
+- Network Analysis
 ---
 
 Walkthrough of PIGGY invesigation
