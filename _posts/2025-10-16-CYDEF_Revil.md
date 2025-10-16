@@ -1,7 +1,7 @@
 ---
 title: 'Revil Walkthrough - CyberDefenders Labs'
 date: 2025-10-16 18:00:00 +0530
-categories: [blue-teaming]
+categories: [threat-hunting]
 tags:
 - Cyber-Defenders
 - Splunk
