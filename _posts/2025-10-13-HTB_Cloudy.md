@@ -89,7 +89,6 @@ Since no credentials were available, the next step was to identify the applicati
 ## Understanding the Application
 
 > ***ownCloud** is an open-source, self-hosted file-sync and sharing platform that allows individuals and organizations to create their own private cloud storage environment. Unlike commercial services such as Google Drive or Dropbox, ownCloud runs entirely on servers you control, giving you full ownership of both the infrastructure and the data. It provides a clean web interface, along with desktop and mobile clients, for uploading, syncing, and sharing files securely across devices. The software integrates with authentication systems like LDAP or Active Directory, supports encryption and versioning, and can be extended through apps for collaboration or external storage. In essence, ownCloud serves as the software layer that delivers cloud-like functionality while keeping all data and control within your own infrastructure.*
-> 
 
 ---
 ## Vulnerability Analysis
@@ -137,10 +136,11 @@ Screenshot after logging in:
 
 Accessing the flag at private folder 
 
-### Disclaimer
-
-*The techniques and tools discussed in this walkthrough are intended solely for educational purposes and to help improve cybersecurity awareness. Please conduct any penetration testing activities only on systems that you own or have explicit permission to test. Unauthorized access to computer systems is illegal and punishable by law. The author does not take responsibility for any misuse of the information provided*
 
 ## References:
 
 [https://github.com/d0rb/CVE-2023-49103](https://github.com/d0rb/CVE-2023-49103)
+
+## Disclaimer
+
+*The techniques and tools discussed in this walkthrough are intended solely for educational purposes and to help improve cybersecurity awareness. Please conduct any penetration testing activities only on systems that you own or have explicit permission to test. Unauthorized access to computer systems is illegal and punishable by law. The author does not take responsibility for any misuse of the information provided*
