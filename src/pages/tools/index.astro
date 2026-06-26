@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Tools | Binary Executioner">
+  <section class="section">
+    <div class="section-header">
+      <span class="prompt">$</span>
+      <h1>ls ./tools</h1>
+    </div>
+
+    <p class="page-intro">
+      Scripts, helpers, automation, recon utilities, and small tools I build
+      while learning or solving labs.
+    </p>
+
+    <div class="post-grid">
+      <article class="post-card">
+        <p class="post-path">./tools/recon-helper</p>
+        <h3>Recon Helper</h3>
+        <p>A place for my scanning, enumeration, version-detection, UDP checks, and summary-output scripts.</p>
+        <div class="tags">
+          <span>#recon</span>
+          <span>#nmap</span>
+          <span>#automation</span>
+        </div>
+      </article>
+
+      <article class="post-card">
+        <p class="post-path">./tools/kql-snippets</p>
+        <h3>KQL Snippets</h3>
+        <p>Reusable hunting queries and detection logic snippets for endpoint and identity telemetry.</p>
+        <div class="tags">
+          <span>#kql</span>
+          <span>#xdr</span>
+          <span>#hunting</span>
+        </div>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

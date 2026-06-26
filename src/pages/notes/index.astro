@@ -1,0 +1,52 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Notes | Binary Executioner">
+  <section class="section">
+    <div class="section-header">
+      <span class="prompt">$</span>
+      <h1>cat ./notes.md</h1>
+    </div>
+
+    <p class="page-intro">
+      Short security notes, commands, concepts, cheatsheets, and things I want
+      to remember without digging through five browser tabs again.
+    </p>
+
+    <div class="post-grid">
+      <article class="post-card">
+        <p class="post-path">./notes/cloud-security</p>
+        <h3>Cloud Security</h3>
+        <p>AWS, Azure, IAM, storage misconfigurations, CloudTrail, and cloud attack paths.</p>
+        <div class="tags">
+          <span>#aws</span>
+          <span>#azure</span>
+          <span>#cloud</span>
+        </div>
+      </article>
+
+      <article class="post-card">
+        <p class="post-path">./notes/windows-linux-ad</p>
+        <h3>Windows / Linux / AD</h3>
+        <p>Enumeration, privilege escalation, Active Directory, services, logs, and internals.</p>
+        <div class="tags">
+          <span>#windows</span>
+          <span>#linux</span>
+          <span>#active-directory</span>
+        </div>
+      </article>
+
+      <article class="post-card">
+        <p class="post-path">./notes/detection-engineering</p>
+        <h3>Detection Engineering</h3>
+        <p>KQL, Sigma, process trees, telemetry, detection logic, and false-positive tuning.</p>
+        <div class="tags">
+          <span>#kql</span>
+          <span>#detections</span>
+          <span>#hunting</span>
+        </div>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

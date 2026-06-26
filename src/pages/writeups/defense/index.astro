@@ -1,0 +1,30 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PostCard from "../../../components/PostCard.astro";
+import { getWriteupSection } from "../../../utils/classifyPost";
+
+const posts = await getCollection("posts");
+
+const defensePosts = posts
+  .filter((post) => getWriteupSection(post) === "defense")
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="Defense Labs | Binary Executioner">
+  <section class="section">
+    <div class="section-header">
+      <span class="prompt">$</span>
+      <h1>ls ./writeups/defense</h1>
+    </div>
+
+    <p class="page-intro">
+      Defensive writeups: CyberDefenders, malware analysis, forensics,
+      detection engineering, investigation notes, and threat hunting lessons.
+    </p>
+
+    <div class="post-grid">
+      {defensePosts.map((post) => <PostCard post={post} />)}
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,62 @@
+:root{
+  --green:#00ff66;
+  --green-soft:#00e68a;
+  --green-dim:#00b35a;
+  --bg:#000000;
+  --bg-2:#0a0a0a;
+  --border:#00ff66aa;
+}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--green);
+     font-family:"Courier New", Courier, monospace;line-height:1.7}
+a{color:#00ff99;text-decoration:none}
+a:hover{text-decoration:underline}
+.wrapper{max-width:1100px;margin:0 auto;padding:16px}
+.layout{display:block}
+.content{max-width:840px;margin:0 auto}
+.toolbar{position:sticky;top:0;z-index:50;background:rgba(0,0,0,0.85);
+  border-bottom:1px solid var(--border);padding:10px 14px;display:flex;gap:12px;align-items:center}
+.brand{font-size:20px;margin-right:auto;color:var(--green);text-decoration:none}
+.brand .cursor{animation: blink 1.1s steps(1,end) infinite}
+@keyframes blink{50%{opacity:0}}
+.catbar{display:flex;gap:12px}
+.catbar a{color:var(--green);border:1px solid var(--border);padding:6px 10px;border-radius:8px;text-decoration:none}
+.catbar a:hover{color:#00ff99;text-decoration:none}
+.post-card{border:1px solid var(--border);padding:16px;margin-bottom:16px;background:var(--bg-2);border-radius:10px}
+pre{background:#001a0d;color:#00ff66;border:1px solid var(--border);border-radius:10px;padding:14px;overflow:auto}
+pre code{background:transparent;border:0;padding:0}
+code{background:#001a0d;color:#00ff66;border:1px solid var(--border);padding:2px 6px;border-radius:6px}
+img{max-width:100%;height:auto;border:1px solid var(--border);background:#001a0d}
+footer.site-footer{margin-top:40px;opacity:0.9}
+#matrixCanvas{display:none !important} /* make sure matrix never shows */
+/* --- Tag badges --- */
+.tags { display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 12px; }
+.tag { display:inline-block; padding:4px 10px; border:1px solid var(--border); border-radius:999px; font-size:12px; letter-spacing:.03em; color:var(--green); text-decoration:none }
+.tag:hover { background:#001b0b; text-decoration:none }
+.tag .count { opacity:.8; margin-left:4px }
+/* Tag cloud */
+.tag-cloud { display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 16px; }
+.tag-section { scroll-margin-top: 80px; }
+/* === Tag badges === */
+/* === Tag badges === */
+.tags { display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 12px; }
+.tag { display:inline-block; padding:4px 10px; border:1px solid var(--border); border-radius:999px; font-size:12px; letter-spacing:.03em; color:var(--green); text-decoration:none }
+.tag:hover { background:#001b0b; text-decoration:none }
+.tag .count { opacity:.8; margin-left:4px }
+/* Tag cloud & sections */
+.tag-cloud { display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 16px; }
+.tag-section { scroll-margin-top: 80px; }
+/* Highlight active tag on home filter */
+.tag.active { background:#002612; box-shadow:0 0 0 1px var(--border) inset; }
+#tag-filter { color: var(--green); opacity:.9; }
+/* Category two-column layout */
+.category-page{display:flex; gap:24px; align-items:flex-start}
+.category-main{flex:1; min-width:0}
+.category-sidebar{width:260px; position:sticky; top:72px}
+.category-sidebar .box{border:1px solid var(--border); padding:12px; border-radius:10px; background:#050505}
+.tag-cloud{display:flex; flex-wrap:wrap; gap:8px}
+.filter-note{margin:8px 0 12px; opacity:0.9}
+/* Tag chips (no # sign) */
+.tags{display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 12px}
+.tag{display:inline-block; padding:4px 10px; border:1px solid var(--border); border-radius:999px; font-size:12px; text-decoration:none; color:var(--green)}
+.tag:hover{background:#001b0b; text-decoration:none}

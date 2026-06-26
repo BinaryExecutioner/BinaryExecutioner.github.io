@@ -1,0 +1,52 @@
+---
+import "../styles/global.css";
+
+const { title = "Binary Executioner" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta
+      name="description"
+      content="CTF writeups, security notes, tools, and detection engineering from Binary Executioner."
+    />
+  </head>
+
+  <body>
+    <header class="site-header">
+      <a class="logo" href="/">./binary_executioner</a>
+
+<nav>
+  <a href="/">Home</a>
+
+  <details class="nav-dropdown">
+    <summary class="nav-parent">Writeups</summary>
+
+    <div class="dropdown-menu">
+      <a href="/writeups/">All Writeups</a>
+      <a href="/writeups/attack/">Attack Labs</a>
+      <a href="/writeups/defense/">Defense Labs</a>
+      <a href="/writeups/cloud/">Cloud Labs</a>
+    </div>
+  </details>
+
+  <a href="/notes/">Notes</a>
+  <a href="/tools/">Tools</a>
+  <a href="/about/">About</a>
+</nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer>
+      <span>Binary Executioner</span>
+      <span>breaking boxes · building notes · chasing shells</span>
+    </footer>
+  </body>
+</html>
